@@ -7,7 +7,7 @@ const DBDRIVER = "mysql";
 const DBPORT = "3306";
 const PRE = "lotte_";
 
-const EMAILPWD = "qhDip6vtUSVuAW";
-const EMAILUSER = "lotte.pa@outlook.com";
-const EMAILHOST = "smtp.office365.com";
-const EMAILPORT = "587";
+const EMAILPWD = "2tTuoZMFRqJTS9";
+const EMAILUSER = "lotte.esgi@gmail.com";
+const EMAILHOST = "smtp.gmail.com";
+const EMAILPORT = "465";

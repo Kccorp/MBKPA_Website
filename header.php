@@ -7,6 +7,7 @@ session_start();
     <head>
         <meta charset="UTF-8">
         <title>Title</title>
+        <link rel="icon" type="image/png" href="Assets/Pictures/logo.svg" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
     </head>
     <body>

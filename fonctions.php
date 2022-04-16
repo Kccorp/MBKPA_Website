@@ -1,6 +1,12 @@
 <?php
 require "conf.inc.php";
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require 'PHPMailer/src/Exception.php';
+require 'PHPMailer/src/PHPMailer.php';
+require 'PHPMailer/src/SMTP.php';
 
 //fonction connexion BDD
 function connectDB()
@@ -21,7 +27,7 @@ function connectDB()
 
 }
 
-//Fonction d'envoie d'image
+
 function sendMail($email, $content){
 
     //Instantiation and passing `true` enables exceptions
@@ -40,7 +46,7 @@ function sendMail($email, $content){
 
         //Recipients
         $mail->setFrom('no-reply@lotte.fr', 'no-reply');
-        $mail->addAddress($email);     //Add a recipient
+        $mail->addAddress('keissy.bod@hotmail.com');     //Add a recipient
 
 
 
@@ -51,7 +57,7 @@ function sendMail($email, $content){
         //Content
         $mail->isHTML(true);                                  //Set email format to HTML
         $mail->Subject = 'Ton code de validation PLAY.fr';
-        $mail->Body    = $content;
+        $mail->Body    = "SUCCES ! le mail est bien parti !";
         //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
         $mail->send();
