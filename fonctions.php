@@ -8,6 +8,7 @@ require 'PHPMailer/src/Exception.php';
 require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/src/SMTP.php';
 
+
 //fonction connexion BDD
 function connectDB()
 {
@@ -27,8 +28,52 @@ function connectDB()
 
 }
 
+function checkForCaptcha(){
+    $response = htmlspecialchars($_POST['g-recaptcha-response']);
+    $remoteip = $_SERVER['REMOTE_ADDR'];
+    $request = "https://www.google.com/recaptcha/api/siteverify?secret=".SECRETE_API_CAPTCHA."&response=$response&remoteip=$remoteip";
 
-function sendMail($email, $content){
+    $get = file_get_contents($request);
+    $decode = json_decode($get, true);
+
+    if ($decode['success'])
+        return true;
+    else
+        return false;
+}
+
+function sendRegisterMail($email){
+    $subject = "Confirmation de votre inscription";
+
+    $content = '<html>
+		 <head>
+			<title>Welcome !</title>
+			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+		 </head>
+		 <body>
+			<p>
+				Bonjour '.$_SESSION["info"]["name"].'
+			</p>
+			<p>
+				Nous vous remercions de votre inscription sur notre site.
+			</p>
+			<p>
+			    Email : '.$_SESSION["info"]["email"].'
+			    <br>
+                Mot de passe : xxxxxx
+                <br>
+                <a src="http://localhost:63342/Lotte_PA/index.php">
+                    <button class="btn btn-primary">Se connecter</button>
+                </a>
+            </p>
+            
+		 </body>
+		</html>';
+
+    return sendMail($email, $content, $subject);
+}
+
+function sendMail($email, $content, $subject){
 
     //Instantiation and passing `true` enables exceptions
     $mail = new PHPMailer(true);
@@ -46,7 +91,7 @@ function sendMail($email, $content){
 
         //Recipients
         $mail->setFrom('no-reply@lotte.fr', 'no-reply');
-        $mail->addAddress('keissy.bod@hotmail.com');     //Add a recipient
+        $mail->addAddress($email);     //Add a recipient
 
 
 
@@ -56,14 +101,16 @@ function sendMail($email, $content){
 
         //Content
         $mail->isHTML(true);                                  //Set email format to HTML
-        $mail->Subject = 'Ton code de validation PLAY.fr';
-        $mail->Body    = "SUCCES ! le mail est bien parti !";
+        $mail->Subject = $subject;
+        $mail->Body    = $content;
         //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
         $mail->send();
         echo 'Message has been sent';
+        return true;
     } catch (Exception $e) {
-        //echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        return false;
     }
 
 }

@@ -1,6 +1,6 @@
 <?php
 include 'header.php';
-if ($_SESSION["auth"] == "true") {
+if (isset($_SESSION["auth"]) && $_SESSION["auth"] == "true") {
 
     echo "<div class='alert alert-success'>";
     echo "Bonjour " . $_SESSION["info"]["name"] ." ". $_SESSION["info"]["lastName"] . " !";

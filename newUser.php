@@ -12,14 +12,12 @@ if (!empty($_SESSION["listOfErrors"])) {
     echo "</div>";
     unset($_SESSION["listOfErrors"]);
 
-} else {
-    echo "Pas encore de message";
-}
+} 
 ?>
 <!-- create basic html form-->
-<form method='POST' action="register.php">
+<form method='POST' action="register.php" id="register-form">
     <p>Inscription</p>
-    <input type="hidden" id="recaptchaResponse" name="recaptcha-response">
+<!--    <input type="hidden" id="recaptchaResponse" name="recaptcha-response">-->
     <input type='text' name='nom' placeholder='nom' />
     <input type='text' name='prenom' placeholder='prenom' />
     <input type='text' name='email' placeholder='email' />
@@ -27,17 +25,21 @@ if (!empty($_SESSION["listOfErrors"])) {
     <br>
     <input type='password' name='pwd' placeholder='password'/>
     <input type='password' name='checkPwd' placeholder='check pwd'/>
-    <input type='submit' value='submit' />
-
-    <script src="https://www.google.com/recaptcha/api.js?render=6Lf_dnsfAAAAAD49EG56pdgOjr35V43EWtB-6E3E"></script>
-    <script>
-        grecaptcha.ready(function() {
-            grecaptcha.execute('6Lf_dnsfAAAAAD49EG56pdgOjr35V43EWtB-6E3E', {action: 'homepage'}).then(function(token) {
-                document.getElementById('recaptchaResponse').value = token
-            });
-        });
-    </script>
+<!--    <input type='submit' value='submit' />-->
+    <button type="submit"
+            class="g-recaptcha"
+            data-sitekey=<?php echo SITE_API_CAPTCHA; ?>
+            data-callback='onSubmit'
+            data-action='submit'>Valider</button>
 </form>
+
+<script src="https://www.google.com/recaptcha/api.js"></script>
+<script>
+    function onSubmit(token) {
+        document.getElementById("register-form").submit();
+    }
+</script>
+
 
 
 
