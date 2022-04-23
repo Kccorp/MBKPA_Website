@@ -31,20 +31,21 @@ if (count($_POST)==3
         }
     }
 }
+?>
 
-// create a login form
-echo '<form action="login.php" method="post" id="register-form">';
-echo '<p>Email: <input type="text" name="email" /></p>';
-echo '<p>Password: <input type="password" name="password" /></p>';
-?>
-    <button type="submit"
-            class="g-recaptcha btn btn-primary"
-            data-sitekey=<?php echo SITE_API_CAPTCHA; ?>
-            data-callback='onSubmit'
-            data-action='submit'>Valider</button>
-<?php
-echo '</form>';
-?>
+
+<form action="login.php" method="post" id="register-form">
+    <p>Email: <input type="text" name="email" /></p>
+    <p>Password: <input type="password" name="password" /></p>
+        <button type="submit"
+                class="g-recaptcha btn btn-primary"
+                data-sitekey=<?php echo SITE_API_CAPTCHA; ?>
+                data-callback='onSubmit'
+                data-action='submit'>Valider</button>
+
+ </form>
+
+
 
 <script src='https://www.google.com/recaptcha/api.js'></script>
 <script>
@@ -52,3 +53,7 @@ echo '</form>';
         document.getElementById("register-form").submit();
     }
 </script>
+
+<?php
+include "footer.php";
+?>
