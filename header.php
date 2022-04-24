@@ -16,6 +16,7 @@ session_start();
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/login_register.css">
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yfile6GSYGSHk7tPXikynS7ogEvDej/m4="  </script> -->
 
@@ -95,7 +96,6 @@ session_start();
             if (isset($_SESSION["auth"]) && $_SESSION["auth"] == "true")
                 {
 
-
                         echo '<li class="">';
                             echo '<a href="logout.php">';
                                 echo '<i class="bx bx-log-out icon" ></i>';
@@ -112,7 +112,7 @@ session_start();
 
                     echo '<li class="">';
                         echo '<a href="newUser.php">';
-                        echo '<i class="bx bxs-user-account icon" ></i>';
+                        echo '<i class="bx bxs-user-circle icon" ></i>';
                         echo "<span class='text nav-text''>S'inscrire</span>";
                         echo '</a>';
                     echo '</li>';

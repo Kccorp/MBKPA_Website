@@ -7,7 +7,7 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
 </script>
 
-
+<script src="js/login_register.js"></script>
 <script src="js/header.js"></script>
 </body>
 </html>
