@@ -55,35 +55,35 @@ session_start();
                 </li>
 
                 <li class="nav-link">
-                    <a href="#">
+                    <a href="localisation.php">
                         <i class='fa fa-street-view icon' ></i>
                         <span class="text nav-text">Trouves nous</span>
                     </a>
                 </li>
 
                 <li class="nav-link">
-                    <a href="#">
+                    <a href="formules.php">
                         <i class='fa fa-list-ul icon'></i>
                         <span class="text nav-text">Les formules</span>
                     </a>
                 </li>
 
                 <li class="nav-link">
-                    <a href="#">
+                    <a href="shop.php">
                         <i class='fa fa-cart-plus icon' ></i>
                         <span class="text nav-text">Shop</span>
                     </a>
                 </li>
 
                 <li class="nav-link">
-                    <a href="#">
+                    <a href="faq.php">
                         <i class='fa fa-question-circle icon' ></i>
                         <span class="text nav-text">F.A.Q</span>
                     </a>
                 </li>
 
                 <li class="nav-link">
-                    <a href="#">
+                    <a href="rules.php">
                         <i class='fa fa-thumbs-up icon' ></i>
                         <span class="text nav-text">Bonne conduite</span>
                     </a>

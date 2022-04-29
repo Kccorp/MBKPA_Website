@@ -33,11 +33,9 @@ if (count($_POST)==3
 }
 ?>
 
-
-
     <div class="wrapper">
         <div class="headline">
-            <h1>Bienvenue. <br>Montez dans le vaisseau direction le futur </h1>
+            <h1>Bienvenue. <br>Montes dans le vaisseau direction le futur </h1>
         </div>
 
         <form  action="login.php" class="form" method="post" id="register-form">
