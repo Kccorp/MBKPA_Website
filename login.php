@@ -25,7 +25,9 @@ if (count($_POST)==3
             $_SESSION["auth"]=true;
             $_SESSION["info"]=$results;
             echo '<div class="alert alert-success">Connexion réussie</div>';
-            header("Location: index.php");
+
+            header("Location:index.php");
+
         }else{
             echo '<div class="alert alert-danger">Identifiants incorrects</div>';
         }
@@ -49,15 +51,17 @@ if (count($_POST)==3
                 <div class="form-group">
                     <input type="password" name="password" placeholder="Mot de passe"/></p>
                 </div>
-                <div class="forget-password">
-                    <a href="#">Un trou de mémoire ? </a>
-                </div>
+
                 <button type="submit"
                         class="g-recaptcha btn btn-primary"
                         data-sitekey=<?php echo SITE_API_CAPTCHA; ?>
                         data-callback='onSubmit'
                         data-action='submit'>Valider</button>
+                <div class="forget-password">
+                    <a href="#">Un trou de mémoire ? </a>
+                </div>
                 <div class="account-exist">
+
                     Vous n'avez pas encore rejoint la team ? <a href="newUser.php" id="signup">Bah rejoins là</a>
                 </div>
             </div>
