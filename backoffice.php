@@ -33,13 +33,15 @@ if (isset($_SESSION["auth"]) && $_SESSION["auth"] == "true") {
                         <th scope="col">Nom</th>
                         <th scope="col">Prénom</th>
                         <th scope="col">Email</th>
-                        <th scope="col">Banné</th>
+                        <th scope="col">Banni</th>
                         <th scope="col">Partenaire</th>
                         <th scope="col">Admin</th>
                         <th scope="col">Points de fidélités</th>
                     </tr>
                     </thead>
                     <tbody id="selectMembers">
+
+                    <div id="test"> TEST </div>
 
                     <?php
                     $connection = connectDB();
@@ -99,8 +101,11 @@ if (isset($_SESSION["auth"]) && $_SESSION["auth"] == "true") {
 
 
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous">
 </script>
 <script src="js/backoffice.js"></script>
 <script src="js/header.js"></script>
