@@ -47,4 +47,55 @@ if (isset($_GET['idUser']) && isset($_GET['idParams'])) {
         $queryPrepared->execute(["id_user"=>$idUser]);
     }
 
+} elseif (isset($_GET['searchMembers'])) {
+
+    $members = $_GET['searchMembers']."%";
+
+    $connection = connectDB();
+    $queryPrepared = $connection->prepare("SELECT idUser, name, lastName, email, isBanned, isPartner, isAdmin, fidelityPoints FROM ".PRE."user WHERE name LIKE :name or lastName LIKE :lastName or email LIKE :email or idUser LIKE :idUser");
+    $queryPrepared->execute(["name"=>$members, "lastName"=>$members, "email"=>$members, "idUser"=>$members]);
+    $results = $queryPrepared->fetchALL(PDO::FETCH_ASSOC);
+
+    foreach ($results as $users => $infousers ) {
+        foreach ($infousers as $cle => $info) {
+            if ($cle == "idUser") {
+                echo "<th scope=row>".$info."</th>";
+            } elseif ($cle == "email" || $cle == "name" || $cle == "lastName") {
+                echo "<td>".$info."</td>";
+            }elseif ($cle== "isBanned" || $cle == "isPartner" || $cle == "isAdmin") {
+                if ($info==1){
+                    echo "<td>True</td>";
+                }else {
+                    echo"<td></td>";
+                }
+            }elseif ($cle == "fidelityPoints") {
+                echo "<td class='text-center'>".$info."</td>";
+            }
+        }
+
+
+        foreach ($infousers as $cle => $info) {
+            if ($cle == 'idUser') {
+                echo '<div class="dropdown">';
+
+                echo '<td><button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+                echo '<img src="Assets/Pictures/211751_gear_icon.svg" width="20px"  id='.$info.'>';
+                echo '</button>';
+                echo '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">';
+                echo '<a onclick="changeStatus(1,'.$info.')" class="dropdown-item" href="#">Bannir</a>';
+                echo '<a onclick="changeStatus(2,'.$info.')" class="dropdown-item" href="#">Promouvoir Admin</a>';
+                echo '<a onclick="changeStatus(3,'.$info.')" class="dropdown-item" href="#">Promouvoir Partenaire</a>';
+                echo '<a onclick="changeStatus(4,'.$info.')" class="dropdown-item" href="#">Débannir</a>';
+                echo '<a onclick="changeStatus(5,'.$info.')" class="dropdown-item" href="#">Retirer Admin</a>';
+                echo '<a onclick="changeStatus(6,'.$info.')" class="dropdown-item" href="#">Retirer Partenaire</a>';
+                echo '<a onclick="changeStatus(7,'.$info.')" class="dropdown-item" href="#">Supprimer le compte</a>';
+                echo '</div>';
+
+                echo '</div></td>';
+
+            }
+        }
+        echo "</tr>";
+    }
+
 }

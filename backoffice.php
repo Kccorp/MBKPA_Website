@@ -41,8 +41,6 @@ if (isset($_SESSION["auth"]) && $_SESSION["auth"] == "true") {
                     </thead>
                     <tbody id="selectMembers">
 
-                    <div id="test"> TEST </div>
-
                     <?php
                     $connection = connectDB();
                     $queryPrepared = $connection->prepare("SELECT idUser, name, lastName, email, isBanned, isPartner, isAdmin, fidelityPoints FROM ".PRE."user");
