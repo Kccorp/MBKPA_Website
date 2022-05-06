@@ -10,67 +10,90 @@ if (isset($_SESSION["auth"]) && $_SESSION["auth"] == "true") {
         <div class="dash-content">
             <div class="overview">
 
-               
+                <div class="activity">
+                    <div class="title">
+                        <i class='bx bxs-group' ></i>
+                        <span class="text">Gestion des utilisateurs</span>
+                    </div>
+                        <div class="boxBack shadow border col-md mt-5 mb-5">
+                                <form class="form-inline my-2 my-lg-0 offset-1 col-md-2">
+                                    <input onkeyup="searchMembres()" class="form-control mr-sm-2 mt-3" id="searchMembers" type="searchMembers" placeholder="Rechercher" aria-label="search">
+                                </form>
+                                    <table class="table table-hover my-4">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Nom</th>
+                                            <th scope="col">Prénom</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">Banni</th>
+                                            <th scope="col">Partenaire</th>
+                                            <th scope="col">Admin</th>
+                                            <th scope="col">Points de fidélités</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="selectMembers">
+
+                                        <?php
+                                        $connection = connectDB();
+                                        $queryPrepared = $connection->prepare("SELECT idUser, name, lastName, email, isBanned, isPartner, isAdmin, fidelityPoints FROM ".PRE."user");
+                                        $queryPrepared->execute();
+                                        $results = $queryPrepared->fetchALL(PDO::FETCH_ASSOC);
+
+                                        foreach ($results as $users => $infousers ) {
+                                            foreach ($infousers as $cle => $info) {
+                                                if ($cle == "idUser") {
+                                                    echo "<th scope=row>".$info."</th>";
+                                                } elseif ($cle == "email" || $cle == "name" || $cle == "lastName") {
+                                                    echo "<td>".$info."</td>";
+                                                }elseif ($cle== "isBanned" || $cle == "isPartner" || $cle == "isAdmin") {
+                                                    if ($info==1){
+                                                        echo "<td>True</td>";
+                                                    }else {
+                                                        echo"<td></td>";
+                                                    }
+                                                }elseif ($cle == "fidelityPoints") {
+                                                    echo "<td class='text-center'>".$info."</td>";
+                                                }
+                                            }
 
 
-            <div class="activity">
-                <div class="title">
-                    <i class='bx bxs-group' ></i>
-                    <span class="text">Gestion des utilisateurs</span>
-                </div>
+                                            foreach ($infousers as $cle => $info) {
+                                                if ($cle == 'idUser') {
+                                                    echo '<div class="dropdown">';
 
-                <div class="activity-data">
-                    <div class="data names">
-                        <span class="data-title">Name</span>
-                        <span class="data-list">Prem Shahi</span>
-                        <span class="data-list">Deepa Chand</span>
-                        <span class="data-list">Manisha Chand</span>
-                        <span class="data-list">Pratima Shahi</span>
-                        <span class="data-list">Man Shahi</span>
-                        <span class="data-list">Ganesh Chand</span>
-                        <span class="data-list">Bikash Chand</span>
+                                                    echo '<td><button class="bx bxs-color btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+                                                    echo '<img src="Assets/Pictures/211751_gear_icon.svg" width="20px"  id='.$info.'>';
+                                                    echo '</button>';
+                                                    echo '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">';
+                                                    echo '<a onclick="changeStatus(1,'.$info.')" class="dropdown-item" href="#">Bannir</a>';
+                                                    echo '<a onclick="changeStatus(2,'.$info.')" class="dropdown-item" href="#">Promouvoir Admin</a>';
+                                                    echo '<a onclick="changeStatus(3,'.$info.')" class="dropdown-item" href="#">Promouvoir Partenaire</a>';
+                                                    echo '<a onclick="changeStatus(4,'.$info.')" class="dropdown-item" href="#">Débannir</a>';
+                                                    echo '<a onclick="changeStatus(5,'.$info.')" class="dropdown-item" href="#">Retirer Admin</a>';
+                                                    echo '<a onclick="changeStatus(6,'.$info.')" class="dropdown-item" href="#">Retirer Partenaire</a>';
+                                                    echo '<a onclick="changeStatus(7,'.$info.')" class="dropdown-item" href="#">Supprimer le compte</a>';
+                                                    echo '</div>';
+
+                                                    echo '</div></td>';
+
+                                                }
+                                            }
+                                            echo "</tr>";
+                                        }
+                                        ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                        </div>
                     </div>
-                    <div class="data email">
-                        <span class="data-title">Email</span>
-                        <span class="data-list">premshahi@gmail.com</span>
-                        <span class="data-list">deepachand@gmail.com</span>
-                        <span class="data-list">prakashhai@gmail.com</span>
-                        <span class="data-list">manishachand@gmail.com</span>
-                        <span class="data-list">pratimashhai@gmail.com</span>
-                        <span class="data-list">manshahi@gmail.com</span>
-                        <span class="data-list">ganeshchand@gmail.com</span>
-                    </div>
-                    <div class="data joined">
-                        <span class="data-title">Joined</span>
-                        <span class="data-list">2022-02-12</span>
-                        <span class="data-list">2022-02-12</span>
-                        <span class="data-list">2022-02-13</span>
-                        <span class="data-list">2022-02-13</span>
-                        <span class="data-list">2022-02-14</span>
-                        <span class="data-list">2022-02-14</span>
-                        <span class="data-list">2022-02-15</span>
-                    </div>
-                    <div class="data type">
-                        <span class="data-title">Type</span>
-                        <span class="data-list">New</span>
-                        <span class="data-list">Member</span>
-                        <span class="data-list">Member</span>
-                        <span class="data-list">New</span>
-                        <span class="data-list">Member</span>
-                        <span class="data-list">New</span>
-                        <span class="data-list">Member</span>
-                    </div>
-                    <div class="data status">
-                        <span class="data-title">Status</span>
-                        <span class="data-list">Liked</span>
-                        <span class="data-list">Liked</span>
-                        <span class="data-list">Liked</span>
-                        <span class="data-list">Liked</span>
-                        <span class="data-list">Liked</span>
-                        <span class="data-list">Liked</span>
-                        <span class="data-list">Liked</span>
-                    </div>
-                </div>
+
+
+
+
+
+
             </div>
             </div>
         </div>
