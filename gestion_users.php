@@ -15,11 +15,11 @@ if (isset($_SESSION["auth"]) && $_SESSION["auth"] == "true") {
                         <i class='bx bxs-group' ></i>
                         <span class="text">Gestion des utilisateurs</span>
                     </div>
-                        <div class="boxBack shadow border col-md mt-5 mb-5">
+                        <div class="boxBack shadow col-md mt-5 mb-5">
                                 <form class="form-inline my-2 my-lg-0 offset-1 col-md-2">
                                     <input onkeyup="searchMembres()" class="form-control mr-sm-2 mt-3" id="searchMembers" type="searchMembers" placeholder="Rechercher" aria-label="search">
                                 </form>
-                                    <table class="table table-hover my-4">
+                                    <table class="table table-hover my-2">
                                         <thead>
                                         <tr>
                                             <th scope="col">ID</th>
@@ -30,6 +30,8 @@ if (isset($_SESSION["auth"]) && $_SESSION["auth"] == "true") {
                                             <th scope="col">Partenaire</th>
                                             <th scope="col">Admin</th>
                                             <th scope="col">Points de fidélités</th>
+                                            <th scope="col">Actions</th>
+
                                         </tr>
                                         </thead>
                                         <tbody id="selectMembers">
@@ -63,7 +65,7 @@ if (isset($_SESSION["auth"]) && $_SESSION["auth"] == "true") {
                                                     echo '<div class="dropdown">';
 
                                                     echo '<td><button class="bx bxs-color btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
-                                                    echo '<img src="Assets/Pictures/211751_gear_icon.svg" width="20px"  id='.$info.'>';
+                                                    echo '<i class="bx bxs-color" id='.$info.'></i>';
                                                     echo '</button>';
                                                     echo '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">';
                                                     echo '<a onclick="changeStatus(1,'.$info.')" class="dropdown-item" href="#">Bannir</a>';
