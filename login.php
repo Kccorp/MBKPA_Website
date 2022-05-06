@@ -1,5 +1,7 @@
 <?php
+
 include "header.php";
+
 
 if (count($_POST)==3
     && !empty($_POST["email"])
@@ -31,7 +33,13 @@ if (count($_POST)==3
         }
     }
 }
+
+
 ?>
+
+    <div class="container">
+    <div class="row">
+    <div class="col-md-12 mt-5">
 
     <div class="wrapper">
         <div class="headline">
@@ -42,10 +50,10 @@ if (count($_POST)==3
 
             <div class="signin">
                 <div class="form-group">
-                    <input type="text" name="email" placeholder="Email"/></p>
+                    <input type="text" name="email" placeholder="Email"/>
                 </div>
                 <div class="form-group">
-                    <input type="password" name="password" placeholder="Mot de passe"/></p>
+                    <input type="password" name="password" placeholder="Mot de passe"/>
                 </div>
                 <div class="forget-password">
                     <a href="#">Un trou de mémoire ? </a>
@@ -61,6 +69,11 @@ if (count($_POST)==3
             </div>
         </form>
     </div>
+
+    </div>
+    </div>
+    </div>
+
 
 <script src='https://www.google.com/recaptcha/api.js'></script>
 <script>
