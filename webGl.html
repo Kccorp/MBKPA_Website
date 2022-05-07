@@ -16,39 +16,189 @@
 
     import { OrbitControls } from './three.js-master/examples/jsm/controls/OrbitControls.js';
     import { GLTFLoader } from './three.js-master/examples/jsm/loaders/GLTFLoader.js';
+    import { DRACOLoader } from './three.js-master/examples/jsm/loaders/DRACOLoader.js';
 
 
 
-    let camera, scene, renderer;
-    let mesh;
+    let camera, scene, renderer, controls;
+    let spotlight, lightHelper;
+
+
+    let mixer = null;
+    let Player_anim_WALK = undefined;
+    let Player_anim_IDLE = undefined;
+
+    let clock = new THREE.Clock(); //lance l'horloge
+
 
     init();
+    animationMixer();
+
+
+    loadCharacter();
+    loadGLTFMap();
+    fakeWallCity();
+
     animate();
 
     function init() {
 
-        camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 1000 );
-        camera.position.z = 400;
+        console.log("init");
+
+        camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 1000 );
+        camera.position.set(-20, 3, 10.8);
+        camera.name = "camera";
 
         scene = new THREE.Scene();
-
-        const texture = new THREE.TextureLoader().load( 'Assets/Textures/crate.gif' );
-
-        const geometry = new THREE.BoxGeometry( 200, 200, 200 );
-        const material = new THREE.MeshBasicMaterial( { map: texture } );
-
-        mesh = new THREE.Mesh( geometry, material );
-        scene.add( mesh );
 
         renderer = new THREE.WebGLRenderer( { antialias: true } );
         renderer.setPixelRatio( window.devicePixelRatio );
         renderer.setSize( window.innerWidth, window.innerHeight );
         document.body.appendChild( renderer.domElement );
 
+        controls = new OrbitControls( camera, renderer.domElement );
+        controls.enableDamping = true;
+        controls.minDistance = 0.5;
+        controls.maxDistance = 200;
+        controls.target.set(0, 0, 12 );
+        controls.update();
+
+        const ambient = new THREE.AmbientLight( 0xffffff, 0.3 ); // defini la lumiere ambiante la couleur et l'intensité
+        scene.add( ambient );
+
+        spotlight = new THREE.SpotLight( 0xffffff, 1 ); // defini la lumiere principal la couleur et l'intensité
+        spotlight.position.set( -5, 0, 15 ); //la position
+        spotlight.angle = THREE.Math.degToRad(60); // l'angle de la lumiere
+        spotlight.penumbra = 0.1; // la pénombre
+        spotlight.decay = 2; //la dureté de la lumiere
+        spotlight.distance = 50; // la distance d'affichage de la lumiere
+        scene.add(spotlight);
+
+        //create texture for /Assets/WebGl/Textures/clouds.jpg and add it to the background
+        const loader = new THREE.TextureLoader();
+        loader.load('/Assets/WebGl/Textures/clouds.jpg' , function(texture)
+        {
+            scene.background = texture;
+        });
+
+
+        // add axe helper
+        const axesHelper = new THREE.AxesHelper( 15 );
+        scene.add( axesHelper );
+
+        // add light helper
+        lightHelper = new THREE.SpotLightHelper( spotlight );
+        scene.add( lightHelper );
+
+
 
 
         window.addEventListener( 'resize', onWindowResize );
 
+    }
+
+    function animationMixer(){
+
+        // create animation and store it in Player_anim_WALK
+        new GLTFLoader().setPath( 'Assets/WebGl/Animations/' ).load( 'walking.glb', function ( gltf ) {
+
+            //------------Anims-------------------------------
+            Player_anim_WALK = gltf.animations[0] ; // first animation
+
+        } );
+
+        // create animation and store it in Player_anim_IDLE
+        new GLTFLoader().setPath( 'Assets/WebGl/Animations/' ).load( 'idle.glb', function ( gltf ) {
+
+            console.log(gltf);
+
+            Player_anim_IDLE = gltf.animations[0] ; // first animation
+
+        } );
+
+    }
+
+    // function to load the map
+    function loadGLTFMap() {
+
+        console.log("loadGLTFMap");
+        const loaderMap = new GLTFLoader();
+
+        const dracoloader = new DRACOLoader();
+        dracoloader.setDecoderPath( 'three.js-master/examples/js/libs/draco' );
+        loaderMap.setDRACOLoader( dracoloader );
+
+        loaderMap.load( 'Assets/WebGl/3dModels/street_tunnel/scene.glb', function ( gltf ) {
+
+            gltf.scene.traverse(function (child) {
+                if (child.isMesh) {
+                    child.receiveShadow = true;
+                    child.castShadow = true;
+                }
+            }, gltf.scene);
+            scene.add( gltf.scene );
+
+            gltf.animations;
+            gltf.scene; // THREE.Group
+            gltf.scenes; // Array<THREE.Group>
+            gltf.cameras; // Array<THREE.Camera>
+            gltf.asset;
+        },
+            function ( xhr ) {
+                console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+            },
+            function ( error ) {
+                console.log( 'An error happened' );
+            }
+        );
+
+    }
+
+    // function to load the fake wall
+    function fakeWallCity() {
+
+        // create new texture for fakeWall.png
+        const textureFakeWall = new THREE.TextureLoader().load( 'Assets/WebGl/Textures/fakeWall.png' );
+
+
+        const geometry = new THREE.BoxGeometry( 1, 10, 15 );
+        const material = new THREE.MeshBasicMaterial( { map: textureFakeWall } );
+        const cube = new THREE.Mesh( geometry, material );
+        cube.position.set(48, 2, 13);
+        cube.name = "fakeWall";
+        scene.add( cube );
+    }
+
+    // function to load the player
+    function loadCharacter() {
+        new GLTFLoader().setPath( 'Assets/WebGl/3dModels/character/' ).load( 'walking.glb', function ( gltf ) {
+
+            gltf.scene.translateX(0);
+            gltf.scene.translateY(-0.5);
+            gltf.scene.translateZ(13);
+            gltf.scene.name = "Player";
+
+            // gltf.scene.traverse(function (child) {
+            //     if (child.isMesh) {
+            //         child.receiveShadow = true;
+            //         child.castShadow = true;
+            //     }
+            // }
+
+
+            gltf.scene.rotation.y = Math.PI / 2;
+
+            // ---------------- ANIMATIONMIXER----------------
+            mixer = new THREE.AnimationMixer( gltf.scene); //l'object possèdant les animations
+
+            // Player_anim_IDLE = gltf.animations[0] ; // first animation
+
+            //------------Anims-------------------------------
+            mixer.clipAction( Player_anim_IDLE ).play(); //joue l'animation chargé
+
+
+            scene.add( gltf.scene);
+        } );
     }
 
     function onWindowResize() {
@@ -64,12 +214,23 @@
 
         requestAnimationFrame( animate );
 
-        mesh.rotation.x += 0.005/2;
-        mesh.rotation.y += 0.01/2;
+        // log the camera position
+        // console.log(camera.position);
 
+        controls.update();
+
+        render();
+    }
+
+    function render() {
         renderer.render( scene, camera );
 
+        if (mixer != null) {
+            let delta = clock.getDelta(); // fait le delta avec la clock n-1
+            mixer.update(delta);	//actualise l'animation
+        }
     }
+
 </script>
 
 </body>
