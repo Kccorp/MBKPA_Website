@@ -21,7 +21,6 @@
 
 
     let camera, scene, renderer, controls;
-    let spotlight, lightHelper;
 
 
     let mixer = null;
@@ -63,16 +62,9 @@
         controls.target.set(0, 0, 12 );
         controls.update();
 
-        const ambient = new THREE.AmbientLight( 0xffffff, 0.3 ); // defini la lumiere ambiante la couleur et l'intensité
+        const ambient = new THREE.AmbientLight( 0xffffff, 2 ); // defini la lumiere ambiante la couleur et l'intensité
         scene.add( ambient );
 
-        spotlight = new THREE.SpotLight( 0xffffff, 1 ); // defini la lumiere principal la couleur et l'intensité
-        spotlight.position.set( -5, 0, 15 ); //la position
-        spotlight.angle = THREE.Math.degToRad(60); // l'angle de la lumiere
-        spotlight.penumbra = 0.1; // la pénombre
-        spotlight.decay = 2; //la dureté de la lumiere
-        spotlight.distance = 50; // la distance d'affichage de la lumiere
-        scene.add(spotlight);
 
         //create texture for /Assets/WebGl/Textures/clouds.jpg and add it to the background
         const loader = new THREE.TextureLoader();
@@ -85,13 +77,6 @@
         // add axe helper
         const axesHelper = new THREE.AxesHelper( 15 );
         scene.add( axesHelper );
-
-        // add light helper
-        lightHelper = new THREE.SpotLightHelper( spotlight );
-        scene.add( lightHelper );
-
-
-
 
         window.addEventListener( 'resize', onWindowResize );
 
@@ -130,12 +115,7 @@
 
         loaderMap.load( 'Assets/WebGl/3dModels/street_tunnel/scene.glb', function ( gltf ) {
 
-            gltf.scene.traverse(function (child) {
-                if (child.isMesh) {
-                    child.receiveShadow = true;
-                    child.castShadow = true;
-                }
-            }, gltf.scene);
+
             scene.add( gltf.scene );
 
             gltf.animations;
@@ -160,7 +140,6 @@
         // create new texture for fakeWall.png
         const textureFakeWall = new THREE.TextureLoader().load( 'Assets/WebGl/Textures/fakeWall.png' );
 
-
         const geometry = new THREE.BoxGeometry( 1, 10, 15 );
         const material = new THREE.MeshBasicMaterial( { map: textureFakeWall } );
         const cube = new THREE.Mesh( geometry, material );
@@ -173,18 +152,10 @@
     function loadCharacter() {
         new GLTFLoader().setPath( 'Assets/WebGl/3dModels/character/' ).load( 'walking.glb', function ( gltf ) {
 
-            gltf.scene.translateX(0);
+            gltf.scene.translateX(-12);
             gltf.scene.translateY(-0.5);
-            gltf.scene.translateZ(13);
+            gltf.scene.translateZ(12);
             gltf.scene.name = "Player";
-
-            // gltf.scene.traverse(function (child) {
-            //     if (child.isMesh) {
-            //         child.receiveShadow = true;
-            //         child.castShadow = true;
-            //     }
-            // }
-
 
             gltf.scene.rotation.y = Math.PI / 2;
 
