@@ -20,6 +20,10 @@
                 <a href="index.php">
                     <img src="Assets/Pictures/logo_fill.png" alt="Lotte" width="100">
                 </a>
+                <div class="text-white mt-3">
+                    <h5>Z pour avancer </h5>
+                    <h5 id="tutoStop">S pour s'arrêter </h5>
+                </div>
             </div>
             <div class="col-10">
                 <h2 class="text-white">Lotte - WebGL app</h2><br><br><br>
@@ -37,7 +41,6 @@
 
 <script type="module">
 
-    // import * as THREE from 'https://threejs.org/build/three.module.js';
     import * as THREE from './three.js-master/build/three.module.js';
 
     import { OrbitControls } from './three.js-master/examples/jsm/controls/OrbitControls.js';
@@ -56,10 +59,7 @@
     let clock = new THREE.Clock(); //lance l'horloge
 
     const z_press = 90;
-    const q_press = 81;
-    const d_press = 68;
     const s_press = 83;
-    const i_press = 73;
     const f_press = 70;
 
     let player = null;
@@ -82,8 +82,6 @@
     animate();
 
     function init() {
-
-        console.log("init");
 
         scene = new THREE.Scene();
 
@@ -120,16 +118,9 @@
 
             const loadingScreen = document.getElementById( 'loading-screen' );
             loadingScreen.classList.add( 'fade-out' );
-
-            // optional: remove loader from DOM via event listener
-            loadingScreen.addEventListener( 'transitionend', onTransitionEnd );
-
+            
         } );
 
-
-        // add axe helper
-        const axesHelper = new THREE.AxesHelper( 15 );
-        scene.add( axesHelper );
 
         window.addEventListener( 'resize', onWindowResize );
 
@@ -148,8 +139,6 @@
         // create animation and store it in Player_anim_IDLE
         new GLTFLoader().setPath( 'Assets/WebGl/Animations/' ).load( 'idle.glb', function ( gltf ) {
 
-            console.log(gltf);
-
             Player_anim_IDLE = gltf.animations[0] ; // first animation
 
         } );
@@ -159,7 +148,6 @@
     // function to load the map
     function loadGLTFMap() {
 
-        console.log("loadGLTFMap");
         const loaderMap = new GLTFLoader(loadingManager);
 
         const dracoloader = new DRACOLoader();
@@ -245,7 +233,7 @@
 
     document.onkeydown = function (event) {
         if (event.keyCode == z_press) {
-            console.log("z_pressed");
+
             if (state == 1) {
                 marcher();  // marcher
             } else if (state == 3 && checkAnim!="rollBackward") {
@@ -255,7 +243,7 @@
 
             }
         } else if (event.keyCode == s_press) {
-            console.log("s_pressed");
+
             if (state == 1) {
                 stop();
             } else if (state == 3 && checkAnim == "rollForward") {
@@ -264,18 +252,13 @@
                 checkAnim = "rollBackward"; // backward
             }
         } else if (event.keyCode == f_press) {
-            console.log("f_pressed");
+
             if (state == 2) {
                 transformation();
             }
         }
     }
 
-    document.onkeyup = function (event) {
-        if (event.keyCode == z_press) {
-            console.log("z_released");
-        }
-    }
 
     function marcher() {
 
@@ -295,15 +278,12 @@
             for (var i = 0; i < scene.children.length; i++) { //identifie le numéro childen de la souris
                 if (scene.children[i].name == "Player") {
                     player = i;
-                    console.log(player);
                 }
                 if (scene.children[i].name == "camera") {
                     cam = i;
-                    console.log(cam);
                 }
                 if (scene.children[i].name == "scooter") {
                     scooter = i;
-                    console.log(scooter);
                 }
             }
         }
@@ -318,12 +298,10 @@
             checkAnim = "idle";
 
         }
-        console.log(scene);
     }
 
     function transformation() {
         if (scene.children[player].position.x >= -1.30 && state == 2) {
-            console.log("transformation");
             // set scene.children[scooter] position to scene.children[player] position
             scene.children[scooter].position.x = scene.children[player].position.x;
             scene.children[scooter].position.y = scene.children[player].position.y-0.1;
@@ -335,6 +313,8 @@
             document.getElementById("dialogue").innerHTML =
                 "Vous êtes maintenant une trotinette électrique !<br>"+
                 "Sortez dans les rues de Lyon découvrir notre systeme de transport !";
+
+            document.getElementById("tutoStop").innerHTML = "S pour reculer";
 
             state = 3;
         }
@@ -353,14 +333,11 @@
 
         requestAnimationFrame( animate );
 
-        // log the camera position
-        // console.log(camera.position);
-
         // translate on x the player position
         if (checkAnim == "walk" && state == 1) {
             if (scene.children[player].position.x >= -1.30) {
                 stop();
-                // get dialogue id with the dom and write the text "Hello world"
+
                 document.getElementById("dialogue").innerHTML =
                     "Super ! Tu es arrivé à l'emplacement d'une de nos Lottinette électrique.<br>" +
                     "Télécharge l'application mobile et scanne le qrcode de la Lottinette ! <br><br>" +
