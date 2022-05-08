@@ -39,8 +39,7 @@ session_start();
                     echo '<img src="assets/pictures/logo.png" alt="">';
                     echo '</span>';
                     echo '<div class="text logo-text">';
-                    echo '<span class="name">Lotte</span>';
-                    echo '<span class="profession">Dashboard</span>';
+                    echo '<span class="name">Lotte</span>';echo '<span class="profession">Dashboard</span>';
                     echo '</div>';
                     echo '</div>';
                     echo '<i class="bx bx-chevron-right toggle"></i>';
@@ -301,15 +300,10 @@ session_start();
                 </div>
             </li>
 
-        </div>
+
     </div>
 
 </nav>
 
 <section class="home">
-<!--
-<section class="home">
-    <div class="text">Dashboard Sidebar</div>
-</section>
--->
 
