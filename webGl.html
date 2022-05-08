@@ -31,10 +31,25 @@
 <body>
 
 <div id="info">
-    <h2 class="text-white">Lotte - WebGL app</h2><br><br><br>
-    <h3 class="clignote" id="dialogue">
-
-    </h3>
+    <div class="container">
+        <div class="row">
+            <div class="col-2">
+                <a href="index.php">
+                    <img src="Assets/Pictures/logo_fill.png" alt="Lotte" width="100">
+                </a>
+            </div>
+            <div class="col-10">
+                <h2 class="text-white">Lotte - WebGL app</h2><br><br><br>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2">
+            </div>
+            <div class="col-10">
+                <h3 class="clignote" id="dialogue"></h3>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script type="module">
@@ -62,11 +77,13 @@
     const d_press = 68;
     const s_press = 83;
     const i_press = 73;
+    const f_press = 70;
 
     let player = null;
     let cam = null;
     let scooter = null;
     let checkAnim = null;
+    let state = 1;
 
 
     init();
@@ -235,10 +252,19 @@
     document.onkeydown = function (event) {
         if (event.keyCode == z_press) {
             console.log("z_pressed");
-            marcher();
+            if (state == 1) {
+                marcher();  // marcher
+            }
         } else if (event.keyCode == i_press) {
             console.log("i_pressed");
-            stop();
+            if (state == 1) {
+                stop();
+            }
+        } else if (event.keyCode == f_press) {
+            console.log("f_pressed");
+            if (state == 2) {
+                transformation();
+            }
         }
     }
 
@@ -261,6 +287,7 @@
             mixer.clipAction( Player_anim_IDLE ).stop(); //joue l'animation chargé
             mixer.clipAction( Player_anim_WALK ).play(); //joue l'animation chargé
             checkAnim = "walk";
+            state = 1;
 
             for (var i = 0; i < scene.children.length; i++) { //identifie le numéro childen de la souris
                 if (scene.children[i].name == "Player") {
@@ -270,6 +297,10 @@
                 if (scene.children[i].name == "camera") {
                     cam = i;
                     console.log(cam);
+                }
+                if (scene.children[i].name == "scooter") {
+                    scooter = i;
+                    console.log(scooter);
                 }
             }
         }
@@ -285,6 +316,23 @@
 
         }
         console.log(scene);
+    }
+
+    function transformation() {
+        if (scene.children[player].position.x >= -1.30 && state == 2) {
+            console.log("transformation");
+            // set scene.children[scooter] position to scene.children[player] position
+            scene.children[scooter].position.x = scene.children[player].position.x;
+            scene.children[scooter].position.y = scene.children[player].position.y-0.1;
+            scene.children[scooter].position.z = scene.children[player].position.z;
+            scene.remove(scene.children[player]);
+            //remove clignote class from document.getElementById("dialogue")
+            document.getElementById("dialogue").classList.remove("clignote");
+            document.getElementById("dialogue").classList.add("text-white");
+            document.getElementById("dialogue").innerHTML =" Vous êtes maintenant une trotinette électrique !";
+
+            state = 3;
+        }
     }
 
     function onWindowResize() {
@@ -304,7 +352,7 @@
         // console.log(camera.position);
 
         // translate on x the player position
-        if (checkAnim == "walk") {
+        if (checkAnim == "walk" && state == 1) {
             if (scene.children[player].position.x >= -1.30) {
                 stop();
                 // get dialogue id with the dom and write the text "Hello world"
@@ -312,7 +360,8 @@
                     "Super ! Tu es arrivé à l'emplacement d'une de nos Lottinette électrique.<br>" +
                     "Télécharge l'application mobile et scanne le qrcode de la Lottinette ! <br><br>" +
                     "Appuie sur -> <b>F</b> <- pour prendre la lottinette.";
-            } else {
+                state = 2;
+            }else {
                 scene.children[player].translateZ(0.02);
                 controls.target.set( scene.children[player].position.x+12, scene.children[player].position.y+0.5, scene.children[player].position.z );
                 scene.children[cam].translateZ(-0.02);
