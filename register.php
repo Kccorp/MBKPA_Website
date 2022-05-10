@@ -66,7 +66,7 @@ if ( count($_POST) == 6
         //insertion en BDD
         if( empty($listOfErrors) ){
 
-            $queryPrepared =  $connection->prepare("INSERT INTO ".PRE."user (name, lastName, password, email) VALUES ( :name, :lastName , :pwd, :email);");
+            $queryPrepared =  $connection->prepare("INSERT INTO ".PRE."user (name, lastName, password, email, registerDate) VALUES ( :name, :lastName , :pwd, :email, now());");
             $pwd = password_hash($pwd, PASSWORD_DEFAULT);
 
             $queryPrepared->execute(["name"=>$nom, "lastName"=>$prenom, "pwd"=>$pwd, "email"=>$email]);
