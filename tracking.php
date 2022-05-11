@@ -29,6 +29,54 @@ require 'header.php';
                 </p>
             </div>
 
+            <!-- NOMBRE TOTAL DE CLIENT-->
+            <div class="border col-12 col-md-3  mt-3 p-2 shadow-sm">
+                <p>
+                    <b>Nombre total de client incrit</b>
+                <div class="row justify-content-center">
+                    <p class="font-weight-bolder display-4 text-center">
+                        <?php
+                        $connection = connectDB();
+                        $queryPrepared = $connection->prepare("SELECT count(idUser) FROM ".PRE."user;");
+                        $queryPrepared->execute();
+                        $results = $queryPrepared->fetch();
+                        echo $results[0];
+                        ?>
+                    </p>
+                </div>
+                </p>
+            </div>
+
+            <!-- UTILISATEUR ACTIF-->
+            <div class="border col-12 col-md-3 mt-3 p-2 shadow-sm">
+                <?php
+
+                $queryPrepared = $connection->prepare("SELECT lastConnect FROM ".PRE."tracking;");
+                $queryPrepared->execute();
+                $results = $queryPrepared->fetchALL(PDO::FETCH_ASSOC);
+                $cpt = 0;
+                $currentTime = time();
+                foreach ($results as $key ) {
+                    foreach ($key as $connect => $date) {
+                        $late = strtotime($date);
+                        if (($currentTime - $late) <= 60*15){ // pour 15 minutes
+                            $cpt++;
+                        }
+                    }
+                }
+                ?>
+                <p>
+                    <b>Activité en temps réel</b>
+                <div class="row justify-content-center">
+                    <p class="font-weight-bolder display-4 text-center">
+                        <?php echo $cpt;?>
+                    </p>
+                </div>
+                </p>
+            </div>
+        </div>
+        <div class="row justify-content-around">
+
             <!-- APPAREIL LES PLUS UTILISE -->
             <div class="border col-md-5 col-sm-6 mt-3 pt-2 shadow-sm">
                 <p class="font-weight-bolder ">
@@ -79,53 +127,6 @@ require 'header.php';
                 </ul>
             </div>
 
-            <!-- UTILISATEUR ACTIF-->
-            <div class="border col-12 col-md-3 mt-3 p-2 shadow-sm">
-                <?php
-
-                $queryPrepared = $connection->prepare("SELECT lastConnect FROM ".PRE."tracking;");
-                $queryPrepared->execute();
-                $results = $queryPrepared->fetchALL(PDO::FETCH_ASSOC);
-                $cpt = 0;
-                $currentTime = time();
-                foreach ($results as $key ) {
-                    foreach ($key as $connect => $date) {
-                        $late = strtotime($date);
-                        if (($currentTime - $late) <= 60*15){ // pour 15 minutes
-                            $cpt++;
-                        }
-                    }
-                }
-                ?>
-                <p>
-                    <b>Activité en temps réel</b>
-                <div class="row justify-content-center">
-                    <p class="font-weight-bolder display-4 text-center">
-                        <?php echo $cpt;?>
-                    </p>
-                </div>
-                </p>
-            </div>
-        </div>
-        <div class="row justify-content-around">
-
-            <!-- NOMBRE TOTAL DE CLIENT-->
-            <div class="border col-12 col-md-3  mt-3 p-2 shadow-sm">
-                <p>
-                    <b>Nombre total de client incrit</b>
-                <div class="row justify-content-center">
-                    <p class="font-weight-bolder display-4 text-center">
-                        <?php
-                        $connection = connectDB();
-                        $queryPrepared = $connection->prepare("SELECT count(idUser) FROM ".PRE."user;");
-                        $queryPrepared->execute();
-                        $results = $queryPrepared->fetch();
-                        echo $results[0];
-                        ?>
-                    </p>
-                </div>
-                </p>
-            </div>
 
             <!-- NOMBRE TOTAL DE Trottinette-->
             <div class="border col-12 col-md-3  mt-3 p-2 shadow-sm">
@@ -147,7 +148,7 @@ require 'header.php';
 
             <!-- NOMBRE DE Trottinette Hors service-->
             <div class="border col-12 col-md-3  mt-3 p-2 shadow-sm">
-                    <b>Nombre total de trotinette</b>
+                    <b>Nombre de trotinette hors service</b>
                 <div class="row justify-content-center">
                     <p class="font-weight-bolder display-4 text-center">
                         <?php
@@ -302,9 +303,18 @@ require 'header.php';
                 </div>
             </div>
 
+        </div>
+        <div class="row">
 
+            <div class="border col-12 col-md-3  mt-3 p-2 shadow-sm">
+
+                <canvas id="myChart" width="400" height="400"></canvas>
+
+
+            </div>
 
         </div>
+
 
 
         </div>
@@ -321,7 +331,11 @@ require 'header.php';
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous">
 </script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js'></script>
 <script src="js/backoffice.js"></script>
 <script src="js/header.js"></script>
+<script src="js/chart.js"></script>
+
+
 </body>
 </html>
