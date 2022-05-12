@@ -109,7 +109,60 @@ if (isset($_GET['idUser']) && isset($_GET['idParams'])) {
 
     echo json_encode($results);
 
-//    echo "<pre>";
-//    print_r($results);
-//    echo "</pre>";
+} elseif (isset($_GET['ratioScooter'])) {
+
+    header('Content-Type: application/json');
+
+    $connection = connectDB();
+    $queryPrepared = $connection->prepare("SELECT count(idScooter) as 'hs' FROM ".PRE."scooter WHERE status = 'hs'");
+    $queryPrepared->execute();
+    $results = $queryPrepared->fetchALL(PDO::FETCH_ASSOC);
+    $queryPrepared = $connection->prepare("SELECT count(idScooter) as 'up' FROM ".PRE."scooter WHERE status != 'hs'");
+    $queryPrepared->execute();
+    $results = array_merge($results, $queryPrepared->fetchALL(PDO::FETCH_ASSOC));
+
+    echo json_encode($results);
+
+} elseif (isset($_GET['totalVisitor'])) {
+
+    header('Content-Type: application/json');
+
+    $connection = connectDB();
+    $queryPrepared = $connection->prepare("SELECT count(*) AS nbr, MONTH(registerDate) as month FROM ".PRE."user WHERE registerDate >= curdate() - interval (dayofmonth(curdate()) - 1) day - interval 12 month group by MONTH(registerDate), YEAR(registerDate) order by registerDate;");
+    $queryPrepared->execute();
+    $results = $queryPrepared->fetchALL(PDO::FETCH_ASSOC);
+
+    echo json_encode($results);
+
+} elseif (isset($_GET['ratioDevice'])) {
+
+    header('Content-Type: application/json');
+
+    $connection = connectDB();
+    $queryPrepared = $connection->prepare("SELECT device FROM ".PRE."tracking;");
+    $queryPrepared->execute();
+    $results = $queryPrepared->fetchALL();
+    $windows = 0;
+    $ios = 0;
+    $macOS = 0;
+    $android = 0;
+    $unix = 0;
+    foreach ($results as $key => $device) {
+        if (preg_match('#Windows#i', $device[0])) {
+            $windows += 1;
+        } elseif (preg_match('#Macintosh#i', $device[0])) {
+            $macOS += 1;
+        } elseif (preg_match('#iPhone#i', $device[0])) {
+            $ios += 1;
+        } elseif (preg_match('#Android#i', $device[0])) {
+            $android += 1;
+        } elseif (preg_match('#X11#i', $device[0])) {
+            $unix += 1;
+        }
+    }
+    $results = [ $windows, $macOS,$unix, $android,$ios
+    ];
+
+    echo json_encode($results);
+
 }
