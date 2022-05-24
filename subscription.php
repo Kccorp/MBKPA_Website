@@ -20,7 +20,7 @@ require 'header.php';
 
 <?php
 $connect = connectDb();
-$queryPrepare = $connect->prepare("SELECT name, price, description, pricePerMin FROM ".PRE."package where name='$_GET[name]'");
+$queryPrepare = $connect->prepare("SELECT idPackage, name, price, description, pricePerMin FROM ".PRE."package where name='$_GET[name]'");
 $queryPrepare->execute();
 $result = $queryPrepare->fetchAll(PDO::FETCH_ASSOC);
 
@@ -38,7 +38,10 @@ foreach ($result as $row ){
             <?php if (!is_null($row['pricePerMin']))
               echo  "<p>(+   ".$row['pricePerMin']."€/min)</p>";
             ?>
-            <button class="btn btn-primary shadow-sm"> Choisir cette formule </button>
+            <a href="setSub.php?id=<?php echo $row['idPackage']; ?>">
+                <button class="btn btn-primary shadow-sm"> Choisir cette formule </button>
+            </a>
+
         </div>
     </div>
 </div>

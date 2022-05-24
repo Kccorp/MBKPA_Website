@@ -1,6 +1,7 @@
 <?php
-require 'fonctions.php';
 session_start();
+require 'fonctions.php';
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -93,7 +94,7 @@ session_start();
         </div>
         <div class="bottom-content">
         <?php
-            if (isset($_SESSION["auth"]) && $_SESSION["auth"] == "true")
+            if (isset($_SESSION["auth"]) && $_SESSION["auth"])
                 {
 
                         echo '<li class="">';
