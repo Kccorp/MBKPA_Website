@@ -1,19 +1,38 @@
 <?php
 include 'header.php';
-
-
-if (!empty($_SESSION["listOfErrors"])) {
-    echo "<div class='alert alert-danger'>";
-
-    foreach ($_SESSION["listOfErrors"] as $error) {
-        echo $error . "<br>";
-    }
-
-    echo "</div>";
-    unset($_SESSION["listOfErrors"]);
-
-}
 ?>
+
+<h1>Accessoires</h1>
+
+<div class="container ">
+
+        <?php
+
+        $connection = connectDB();
+        $queryPrepare = $connection->prepare("SELECT * FROM ".PRE."merchandise");
+        $queryPrepare->execute();
+        $merchandises = $queryPrepare->fetchAll(PDO::FETCH_ASSOC);
+
+
+        foreach ($merchandises as $row => $infoMerch){
+
+                if ($row % 4 == 0){
+                    echo ' <div class="row">';
+                }
+            ?>
+            <div class="card mt-5 me-4" style="width: 18rem;">
+                <img src="Assets/Shop/<?php echo $infoMerch["urlImage"] ?>" class="card-img-top" alt="...">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title mt-auto"><?php echo $infoMerch["name"] ?></h5>
+                    <p class="card-text "><?php echo $infoMerch["fullname"] ?></p>
+                    <a href="#" class="btn btn-primary ">Voir l'article</a>
+                </div>
+            </div>
+    <?php } ?>
+
+
+</div>
+
 
 <?php
 include 'footer.php';
