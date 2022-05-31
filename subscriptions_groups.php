@@ -2,7 +2,6 @@
 require 'header.php';
 ?>
 
-<!--<img src="Assets/Pictures/formules.jpg" alt="Subscriptions Groups" style=""/>-->
 <div style="background-image: url('Assets/Pictures/formules.jpg'); background-size: cover;     background-position: center center;height: auto;min-height: 20em;">
     <div class="container text-center py-5">
         <div class="row">
@@ -37,18 +36,7 @@ require 'header.php';
                 </div>
             </div>
     <?php } ?>
-<!--        <div class="col-3 shadow-sm" style="background-color: white; border-radius: 10px">-->
-<!--            toto-->
-<!--        </div>-->
-<!--        <div class="col-3 shadow-sm mx-4" style="background-color: white; border-radius: 10px">-->
-<!--            toto-->
-<!--        </div>-->
-<!--        <div class="col-3 shadow-sm" style="background-color: white; border-radius: 10px">-->
-<!--            toto-->
-<!--        </div>-->
-<!--        <div class="col-3 shadow-sm" style="background-color: white; border-radius: 10px">-->
-<!--            toto-->
-<!--        </div>-->
+
     </div>
 </div>
 
