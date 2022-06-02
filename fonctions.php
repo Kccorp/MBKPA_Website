@@ -114,3 +114,10 @@ function sendMail($email, $content, $subject){
     }
 
 }
+
+function addFidelPoint ($amount){
+    $connection = connectDB();
+    $id=$_SESSION["info"]["idUser"];
+    $queryPrepared =  $connection->prepare("UPDATE ".PRE."user SET fidelityPoints = fidelityPoints+".($amount/10)." where idUser=:id_user");
+    $queryPrepared->execute(["id_user"=>$id]);
+}
