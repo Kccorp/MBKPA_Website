@@ -2,7 +2,7 @@
 include 'header.php';
 ?>
 
-<h1>Accessoires</h1>
+<h1 class="text-uppercase"> la boutique</h1>
 
 <div class="container ">
 
@@ -25,7 +25,8 @@ include 'header.php';
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title mt-auto"><?php echo $infoMerch["name"] ?></h5>
                     <p class="card-text "><?php echo $infoMerch["fullname"] ?></p>
-                    <a href="#" class="btn btn-primary ">Voir l'article</a>
+                    <p class="card-text "><?php echo $infoMerch["price"] ?> €</p>
+                    <a href="item.php?idMerchandise=<?php echo $infoMerch["idMerchandise"] ?>" class="btn btn-primary ">Voir l'article</a>
                 </div>
             </div>
     <?php } ?>
