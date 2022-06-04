@@ -26,7 +26,7 @@ if (count($_POST)==3
             $_SESSION["info"]=$results;
             echo '<div class="alert alert-success">Connexion réussie</div>';
 
-            header("Location:index.php");
+            echo '<script> window.location.href = "index.php"; </script>';
 
         }else{
             echo '<div class="alert alert-danger">Identifiants incorrects</div>';
