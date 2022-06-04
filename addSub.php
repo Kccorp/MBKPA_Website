@@ -49,10 +49,7 @@ if ( count($_POST) == 6 &&
         $queryPrepared->execute([$name, $price, $pricePerMin, $status, $duration, $description]);
     } else{
         $_SESSION["listOfErrors"] = $listOfErrors;
-        header("location: backofficeSub.php");
     }
-
-
-    header("Location: backofficeSub.php");
-
 }
+
+header("Location: catalog.php");

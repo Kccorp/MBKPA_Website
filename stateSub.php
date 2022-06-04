@@ -26,5 +26,5 @@ if ( $_SESSION["auth"] && $_SESSION["info"]["isAdmin"] && isset($_GET["idPackage
     echo "Success";
 
 }
-header("Location: backofficeSub.php");
+header("Location: catalog.php");
 

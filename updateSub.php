@@ -22,6 +22,6 @@ if ( count($_POST) == 4 &&
     $queryPrepared = $connection->prepare("UPDATE ".PRE."package SET price = ?, pricePerMin = ?, duration = ?, description = ? WHERE idPackage = ?");
     $queryPrepared->execute([$price, $pricePerMin, $duration, $description, $id]);
 
-    header("Location: backofficeSub.php");
+    header("Location: catalog.php");
 }
 
