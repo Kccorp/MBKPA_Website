@@ -5,6 +5,7 @@ include 'header.php';
 <h1 class="text-uppercase"> la boutique</h1>
 
 <div class="container ">
+    <div class="row">
 
         <?php
 
@@ -16,9 +17,9 @@ include 'header.php';
 
         foreach ($merchandises as $row => $infoMerch){
 
-                if ($row % 4 == 0){
-                    echo ' <div class="row">';
-                }
+//                if ($row % 4 == 0){
+//                    echo ' <div class="row">';
+//                }
             ?>
             <div class="card mt-5 me-4" style="width: 18rem;">
                 <img src="Assets/Shop/<?php echo $infoMerch["urlImage"] ?>" class="card-img-top" alt="...">
