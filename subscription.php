@@ -19,6 +19,12 @@ require 'header.php';
 </div>
 
 <?php
+ if (empty($_GET["name"])){
+     echo '<script>
+     window.location.href = "subscriptions_groups.php";
+        </script>';
+ }
+
 $connect = connectDb();
 $queryPrepare = $connect->prepare("SELECT idPackage, name, price, description, pricePerMin FROM ".PRE."package where name='$_GET[name]'");
 $queryPrepare->execute();
