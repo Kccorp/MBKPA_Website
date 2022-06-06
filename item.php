@@ -18,7 +18,12 @@ if (!empty($_GET["idMerchandise"]) && is_numeric($_GET["idMerchandise"])) {
     <div class="row mt-5">
 
         <div class="col-5 ">
-            <img src="Assets/Shop/<?php echo $item["urlImage"] ?>" class="card-img-top" alt="...">
+            <?php if(!empty($item["urlImage"]) && file_exists($item["urlImage"])){
+                echo '<img src="'.$item["urlImage"].'" class="card-img-top" alt="...">';
+            } else {
+                echo '<img src="Assets/Shop/noImage.png" class="card-img-top" alt="...">';
+            }
+            ?>
         </div>
 
         <div class="offset-1 col-6">

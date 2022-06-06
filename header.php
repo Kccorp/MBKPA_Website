@@ -69,7 +69,7 @@ require 'fonctions.php';
                 </li>
 
                 <li class="nav-link">
-                    <a href="#">
+                    <a href="shop.php">
                         <i class='fa fa-cart-plus icon' ></i>
                         <span class="text nav-text">Shop</span>
                     </a>

@@ -4,9 +4,10 @@ require 'fonctions.php';
 
 if (isset($_SESSION['auth']) && isset($_SESSION['info']) && $_SESSION['auth'] && $_SESSION['info']['isAdmin']) {
 
+
     if ($_FILES["fichier"]["size"] == 0) { // vérifie sui le fichier est vide
 
-        $path = "Assets/Shop/noImage.png";
+        $path = $_GET["image"];
 
     } else {
         $message = "";
@@ -18,8 +19,9 @@ if (isset($_SESSION['auth']) && isset($_SESSION['info']) && $_SESSION['auth'] &&
         }
     }
 
-    if (count($_POST) == 5 &&
-        !empty($_POST["name"]) &&
+
+    if (count($_POST) == 4 &&
+        !empty($_GET["idMerchandise"]) &&
         !empty($_POST["fullname"]) &&
         !empty($_POST["idStrip"]) &&
         !empty($_POST["price"]) &&
@@ -27,16 +29,12 @@ if (isset($_SESSION['auth']) && isset($_SESSION['info']) && $_SESSION['auth'] &&
     ) {
         $listOfErrorsShop = [];
 
-        $name = trim($_POST["name"]);
+        $idMerchandise = trim($_GET["idMerchandise"]);
         $fullname = trim($_POST["fullname"]);
         $idStrip = trim($_POST["idStrip"]);
         $price = trim($_POST["price"]);
         $description = trim($_POST["description"]);
 
-
-        if (strlen($name) < 3 || strlen($name) > 25) {
-            $listOfErrorsShop[] = "Le nom de l'article ne doit pas dépasser les 50 caractères";
-        }
 
         if (strlen($fullname) < 3 || strlen($fullname) > 100) {
             $listOfErrorsShop[] = "Le nom complet de l'article ne doit pas dépasser les 100 caractères";
@@ -52,15 +50,22 @@ if (isset($_SESSION['auth']) && isset($_SESSION['info']) && $_SESSION['auth'] &&
 
         if (empty($listOfErrorsShop)) {
 
+            echo $fullname . "<br>";
+            echo $idStrip . "<br>";
+            echo $price . "<br>";
+            echo $description . "<br>";
+            echo $path . "<br>";
+            echo $idMerchandise . "<br>";
+
             $connection = connectDB();
-            $queryPrepared = $connection->prepare("INSERT INTO " . PRE . "merchandise (name, fullname, idStripe, price, description, urlImage) VALUES (:name, :fullname, :idStrip, :price, :description, :urlImage)");
+            $queryPrepared = $connection->prepare("UPDATE " . PRE . "merchandise SET fullname = :fullname, idStripe = :idStripe, price = :price, description = :description, urlImage = :urlImage WHERE idMerchandise = :idMerchandise");
             $queryPrepared->execute([
-                "name" => $name,
                 "fullname" => $fullname,
-                "idStrip" => $idStrip,
+                "idStripe" => $idStrip,
                 "price" => $price,
                 "description" => $description,
-                "urlImage" => $path]);
+                "urlImage" => $path,
+                "idMerchandise" => $idMerchandise]);
 
         } else {
             $_SESSION["listOfErrorsShop"] = $listOfErrorsShop;
@@ -68,11 +73,6 @@ if (isset($_SESSION['auth']) && isset($_SESSION['info']) && $_SESSION['auth'] &&
         }
     }
 }
+
 header('Location: catalog.php#product');
-
-
-
-
-
-
 
