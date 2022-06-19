@@ -116,8 +116,21 @@ function sendMail($email, $content, $subject){
 }
 
 function addFidelPoint ($amount){
+    echo "herecome the amountttt".$amount;
+    $fidelPoint = 0;
+    $fidelPoint = $amount*0.3;
+    echo "herecome the fidel".$fidelPoint;
+    $fidelPoint+=floor($amount/100);
+    echo "herecome the fidel".$fidelPoint;
+
+    $fidelPoint=floatval($fidelPoint);
+    echo "AND NOW".$fidelPoint%1;
+    if($fidelPoint%1<0.5)
+        $fidelPoint = floor($fidelPoint);
+    else
+        $fidelPoint = ceil($fidelPoint);
     $connection = connectDB();
     $id=$_SESSION["info"]["idUser"];
-    $queryPrepared =  $connection->prepare("UPDATE ".PRE."user SET fidelityPoints = fidelityPoints+".($amount/10)." where idUser=:id_user");
-    $queryPrepared->execute(["id_user"=>$id]);
+    $queryPrepared =  $connection->prepare("UPDATE ".PRE."user SET fidelityPoints = fidelityPoints+ :amount where idUser=:id_user");
+    $queryPrepared->execute(["id_user"=>$id, "amount"=>$fidelPoint]);
 }
