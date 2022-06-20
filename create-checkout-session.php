@@ -1,8 +1,13 @@
 <?php
 include 'header.php';
+if (!isset($_SESSION["info"])){
+    header("Location: login.php");
+die();
+}
+
 $object=$_POST["id"];
-$quantity=$_POST["quantity"];
 $idCustomer=$_SESSION["info"]["idStripe"];
+echo $object;
 
 require 'vendor/autoload.php';
 // This is your test secret API key.
@@ -17,10 +22,12 @@ $checkout_session = \Stripe\Checkout\Session::create([
     'line_items' => [[
         # Provide the exact Price ID (e.g. pr_1234) of the product you want to sell
         'price' => $object,
-        'quantity' => $quantity,
+        'quantity' => 1
+
     ]],
 
     'mode' => 'payment',
+    'allow_promotion_codes' => true,
     'success_url' => $YOUR_DOMAIN . '/success.php',
     'cancel_url' => $YOUR_DOMAIN . '/cancel.php',
 ]);

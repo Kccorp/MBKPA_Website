@@ -19,6 +19,13 @@ if (isset($_SESSION["auth"]) && $_SESSION["auth"] == "true") {
 
 <p>votre total de point est de <?php echo $points ?></p>
 
+<p>Voulez-vous convertir vos points ?</p>
+<p>Vous pouvez actuellement convertir vos points pour <?php echo $points*0.2 ?>€</p>
+
+formulaire de conversion de points
+<form action="create-coupon.php" method="post">
+    <?php echo '<input type="hidden" name="points" value="'.$points.'">' ?>
+    <input type="submit" value="convertir">
 
 <?php
 include 'footer.php';

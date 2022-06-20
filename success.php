@@ -1,6 +1,10 @@
 <?php
 
 include 'header.php';
+if (!isset($_SESSION["checkout_session"])){
+    header("Location: cancel.php");
+    die();
+}
 require 'vendor/autoload.php';
 $stripe = new \Stripe\StripeClient(
     'sk_test_51KwpzKJW6etdvbpFazWo3CLbeSnn5VKOjpVFMTAeSHxfYlshGFvli0dFvdbdD5L1H0n6y8uzmlOXBlkvdfeUxRZW00z8fWVUDk'
