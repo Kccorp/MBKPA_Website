@@ -137,6 +137,10 @@ function addFidelPoint ($amount){
     $queryPrepared->execute(["id_user"=>$id, "amount"=>$fidelPoint]);
 }
 
+function create_coupon ($amount){
+
+}
+
 class BackController{
     public static function upload($message){
         if (!empty($_FILES['fichier']['name'])) {
