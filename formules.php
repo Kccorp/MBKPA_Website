@@ -1,6 +1,7 @@
 <?php
 include 'header.php';
 
+require "banner.php";
 
 if (!empty($_SESSION["listOfErrors"])) {
     echo "<div class='alert alert-danger'>";
@@ -14,7 +15,9 @@ if (!empty($_SESSION["listOfErrors"])) {
 
 }
 ?>
+<body>
 
+</body>
 <?php
 include 'footer.php';
 ?>

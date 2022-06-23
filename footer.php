@@ -21,8 +21,33 @@
 
 <script src="js/login_register.js"></script>
 <script src="js/header.js"></script>
-<script src="js/parallax.js"></script>
-<script src="js/dashboard.js"></script>
+<script src="js/modal.js"></script>
+<script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+<script type="application/javascript">
+    OneSignal.push(function() {
+        /* These examples are all valid */
+        var isPushSupported = OneSignal.isPushNotificationsSupported();
+        if (isPushSupported) {
+            // Push notifications are supported
+            console.log("Supporté");
+            OneSignal.isPushNotificationsEnabled(function(isEnabled) {
+                if (isEnabled){
+                    console.log("Push notifications are enabled!");
+                }
+                else{
+                    console.log("Push notifications are not enabled yet.");
+                    OneSignal.push(function() {
+                        OneSignal.showSlidedownPrompt();
+                    });
+                }
+            });
+        } else {
+            // Push notifications are not supported
+            console.log("Non Supporté");
+
+        }
+    });
+</script>
 
 </body>
 </html>
