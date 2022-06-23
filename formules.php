@@ -13,6 +13,7 @@ if (!empty($_SESSION["listOfErrors"])) {
     unset($_SESSION["listOfErrors"]);
 
 }
+
 ?>
 
 <?php

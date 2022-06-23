@@ -16,7 +16,9 @@ function changeStatus(idParams,idUser){
 }
 
 // fonction pour afficher les utilisateurs en ajax dans le backoffice
-function searchMembres(){
+
+
+function searchMembres(ifPartner){
     let searchMembers = document.getElementById("searchMembers").value;
     if (searchMembers != null) {
         req = new XMLHttpRequest();
@@ -27,7 +29,12 @@ function searchMembres(){
                 count.innerHTML = res;
             }
         };
-        req.open("GET","Ajax.php?searchMembers="+searchMembers, true);
+        if (ifPartner =! 1) {
+            req.open("GET","Ajax.php?searchMembers="+searchMembers, true);
+        }else {
+            req.open("GET", "Ajax.php?searchPartners=" + searchMembers, true);
+        }
         req.send();
     }
 }
+

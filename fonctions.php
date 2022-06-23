@@ -1,12 +1,14 @@
 <?php
 require "conf.inc.php";
 
+use ConvertApi\ConvertApi;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 require 'PHPMailer/src/Exception.php';
 require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/src/SMTP.php';
+require 'vendor/autoload.php';
 
 
 //fonction connexion BDD
@@ -140,6 +142,69 @@ function addFidelPoint ($amount){
 function create_coupon ($amount){
 
 }
+function CreateHtmlInvoice($name,$date,$amount,$descritpion,$email,$id){
+    $filename=$id;
+    $content='<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>
+    bonjour merci pour votre achat le : '.$date.'
+    
+    
+    vous avez achetez : '.$name.'
+    
+    
+    '.$descritpion.' 
+    
+    
+    pour un total de : '.$amount.' $
+    
+    
+    merci pour votre confiance !
+</p>
+
+</body>
+</html>';
+
+    echo $content;
+
+    file_put_contents(__DIR__.'\\WaitforConversion\\'.$filename.'.html',$content);
+    sendMail($email,$content,'facture de votre achat');
+
+}
+//function that list all files names in a directory and return them in an array
+function listAllFiles() {
+    $ffs = scandir('./WaitforConversion');
+    unset($ffs[array_search('.', $ffs, true)]);
+    unset($ffs[array_search('..', $ffs, true)]);
+    print_r($ffs);
+    htmltopdfAPI($ffs);
+}
+
+function htmltopdfAPI($name)
+{
+    //foreach every row of $name
+    foreach ($name as $key => $value){
+        echo $value;
+    }
+
+    ConvertApi::setApiSecret('cMqYUYuDGFG00MG8');
+    foreach ($name as $key => $value) {
+
+        $result = ConvertApi::convert('pdf', [
+            'File' => __DIR__.'/WaitforConversion/'.$value
+        ], 'html'
+        );
+        $result->saveFiles(__DIR__.'/invoices');
+        unlink(__DIR__.'/WaitforConversion/'.$value);
+}
+}
+
+
 
 class BackController{
     public static function upload($message){

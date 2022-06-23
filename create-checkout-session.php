@@ -6,8 +6,14 @@ die();
 }
 
 $object=$_POST["id"];
+$_SESSION["isPackage"]=$_POST["isPackage"];
+$_SESSION["idPackage"]=$_POST["idPackage"];
+if(isset($_POST["numberOfRide"])){
+    $_SESSION["numberOfRide"]=$_POST["numberOfRide"];
+}
+$_SESSION["duration"]=$_POST["duration"];
 $idCustomer=$_SESSION["info"]["idStripe"];
-echo $object;
+
 
 require 'vendor/autoload.php';
 // This is your test secret API key.
