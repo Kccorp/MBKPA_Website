@@ -1,7 +1,6 @@
 <?php
-include 'header.php';
-
-require "banner.php";
+include __DIR__ . "/banner.php";
+include __DIR__ . "/header.php";
 
 if (!empty($_SESSION["listOfErrors"])) {
     echo "<div class='alert alert-danger'>";

@@ -299,6 +299,8 @@ body.dark .switch::before{
     width: calc(100% - 250px);
     background-color: var(--body-color);
     transition: var(--tran-05);
+    margin-left: 5%;
+    margin-top: 3%;
 }
 .home .text{
     font-size: 30px;

@@ -1,6 +1,6 @@
 <?php
-
-include "header.php";
+include __DIR__ . "/banner.php";
+include __DIR__ . "/header.php";
 
 
 if (count($_POST)==3
@@ -37,9 +37,8 @@ if (count($_POST)==3
 
 ?>
 
-    <div class="container">
-    <div class="row">
-    <div class="col-md-12 mt-5">
+<section class="home">
+
 
     <div class="wrapper">
         <div class="headline">
@@ -70,10 +69,8 @@ if (count($_POST)==3
         </form>
     </div>
 
-    </div>
-    </div>
-    </div>
 
+</section>
 
 <script src='https://www.google.com/recaptcha/api.js'></script>
 <script>

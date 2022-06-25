@@ -27,7 +27,7 @@ if (isset($_SESSION["auth"]) && $_SESSION["auth"] == "true") {
         <p>lorem ipsum</p>
     </div>
 </div>
-
+</section>
 
 <?php
 require 'footer.php';

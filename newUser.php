@@ -1,5 +1,6 @@
 <?php
-include 'header.php';
+include __DIR__ . "/banner.php";
+include __DIR__ . "/header.php";
 
 
 if (!empty($_SESSION["listOfErrors"])) {
@@ -18,7 +19,7 @@ if (!empty($_SESSION["listOfErrors"])) {
 
 
 
-
+<section class="home">
 
 <div class="wrapper">
     <div class="headline">
@@ -58,6 +59,7 @@ if (!empty($_SESSION["listOfErrors"])) {
 </div>
 
 
+</section>
 
 
 <script src="https://www.google.com/recaptcha/api.js"></script>
