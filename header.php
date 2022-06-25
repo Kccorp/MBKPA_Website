@@ -1,6 +1,6 @@
 <?php
-require 'fonctions.php';
 session_start();
+require 'fonctions.php';
 ?>
 <!DOCTYPE html>
 <html lang="fr">
