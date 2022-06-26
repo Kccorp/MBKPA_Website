@@ -195,7 +195,7 @@
                                         echo '';
                                         echo '<ul class="menu-links">';
                                             echo '<li class="nav-link">';
-                                                echo '<a href="../index.php">';
+                                                echo '<a href="index.php">';
                                                     echo '<i class="fa fa-home icon"></i>';
                                                     echo '<span class="text nav-text">Accueil</span>';
                                                     echo '</a>';

@@ -1,6 +1,7 @@
 <?php
-require 'header.php';
-require "banner.php";
+require __DIR__ . "/header.php";
+require __DIR__ . "/banner.php";
+
 if (isset($_SESSION["auth"]) && $_SESSION["auth"] == "true") {
 
     echo "<div class='alert alert-success'>";

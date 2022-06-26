@@ -1,6 +1,7 @@
 <?php
-include __DIR__ . "/banner.php";
-include __DIR__ . "/header.php";
+require __DIR__ . "/header.php";
+require __DIR__ . "/banner.php";
+
 
 
 if (!empty($_SESSION["listOfErrors"])) {
@@ -18,7 +19,9 @@ if (!empty($_SESSION["listOfErrors"])) {
 
 
 
-
+<head>
+    <link rel="stylesheet" href="css/login.css">
+</head>
 <section class="home">
 
 <div class="wrapper">

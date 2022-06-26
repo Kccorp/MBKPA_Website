@@ -1,6 +1,6 @@
 <?php
-include __DIR__ . "/banner.php";
-include __DIR__ . "/header.php";
+require __DIR__ . "/header.php";
+require __DIR__ . "/banner.php";
 
 
 if (!empty($_SESSION["listOfErrors"])) {
