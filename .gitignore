@@ -1,0 +1,10 @@
+
+vendor/
+
+composer.json
+
+*.json
+
+composer.lock
+
+composer.phar
