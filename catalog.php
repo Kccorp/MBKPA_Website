@@ -159,6 +159,17 @@ include 'header.php';
                                                 </div>
                                             </div>
 
+                                            <div class="row my-3">
+                                                <div class="form-group col-12" >
+                                                    <label for="package-name" class="col-form-label col-2">Id Strip : </label>
+                                                    <input type="text" class="col-6" name="idStrip" value="<?php echo $infopakage["idStripe"] ?>" placeholder="<?php echo $infopakage["idStripe"] ?>">
+                                                    <div class="row">
+                                                        <a href="https://dashboard.stripe.com/test/products?active=true" target="_blank"><small class="form-text text-muted" >Veuillez créer un identifiant Strip depuis leur site </small></a>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
                                             <div class="form-group my-2">
                                                 <label for="recipient-name" class="col-form-label col-5">Nombre de trajets (-1 pour illimités) :</label>
                                                 <input type="text" class="col-4" name="duration" value="<?php echo $infopakage["numberOfRide"]; ?>">

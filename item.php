@@ -32,7 +32,10 @@ if (!empty($_GET["idMerchandise"]) && is_numeric($_GET["idMerchandise"])) {
             <p><?php echo $item["price"] ?> €</p>
             <p class="my-5"><?php echo $item["description"] ?></p>
 
-            <a href="shop.php" class="btn btn-primary">Acheter</a>
+            <form action='create-checkout-session.php' method='post'>
+                <?php echo "<input type='hidden' name='id' value='".$item["idStripe"]."'>";?>
+
+                <button type='submit'>Acheter</button></form>
         </div>
     </div>
 </div>

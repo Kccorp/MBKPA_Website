@@ -137,11 +137,10 @@ function addFidelPoint ($amount){
     $id=$_SESSION["info"]["idUser"];
     $queryPrepared =  $connection->prepare("UPDATE ".PRE."user SET fidelityPoints = fidelityPoints+ :amount where idUser=:id_user");
     $queryPrepared->execute(["id_user"=>$id, "amount"=>$fidelPoint]);
+    $_SESSION["info"]["fidelityPoints"]+=$fidelPoint;
 }
 
-function create_coupon ($amount){
 
-}
 function CreateHtmlInvoice($name,$date,$amount,$descritpion,$email,$id){
     $filename=$id;
     $content='<!DOCTYPE html>
@@ -170,9 +169,9 @@ function CreateHtmlInvoice($name,$date,$amount,$descritpion,$email,$id){
 </body>
 </html>';
 
-    echo $content;
 
-    file_put_contents(__DIR__.'\\WaitforConversion\\'.$filename.'.html',$content);
+
+    file_put_contents(__DIR__.'\\WaitforConversion\\='.$filename.'.html',$content);
     sendMail($email,$content,'facture de votre achat');
 
 }
@@ -181,7 +180,6 @@ function listAllFiles() {
     $ffs = scandir('./WaitforConversion');
     unset($ffs[array_search('.', $ffs, true)]);
     unset($ffs[array_search('..', $ffs, true)]);
-    print_r($ffs);
     htmltopdfAPI($ffs);
 }
 
@@ -204,7 +202,37 @@ function htmltopdfAPI($name)
 }
 }
 
+function createConvertPromoCode($idStripe,$couponId,$email){
+    $stripe = new \Stripe\StripeClient(
+        'sk_test_51KwpzKJW6etdvbpFazWo3CLbeSnn5VKOjpVFMTAeSHxfYlshGFvli0dFvdbdD5L1H0n6y8uzmlOXBlkvdfeUxRZW00z8fWVUDk'
+    );
+    $code = $stripe->promotionCodes->create([
+        'coupon' => $couponId,
+        'max_redemptions' => 1,
+        'customer' => $idStripe,
 
+    ]);
+    $connection = connectDB();
+    $queryPrepared = $connection->prepare("UPDATE " . PRE . "user SET fidelityPoints = :points  WHERE idStripe = :idStripe");
+    $queryPrepared->execute(["idStripe" =>$idStripe, "points" => 0]);
+
+    $content='<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>
+    bonjour voici votre code promo : '.$code["code"].' de '.$code["amount_off"].' € !
+</p>
+
+</body>
+</html>';
+    sendMail($email,$content,'Votre Code Promo !');
+    header("Location: profil.php?".$code["code"]);
+    die();
+}
 
 class BackController{
     public static function upload($message){

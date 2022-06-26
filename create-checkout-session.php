@@ -4,7 +4,7 @@ if (!isset($_SESSION["info"])){
     header("Location: login.php");
 die();
 }
-
+$idStripe= $_SESSION["info"]["idStripe"];
 $object=$_POST["id"];
 $_SESSION["isPackage"]=$_POST["isPackage"];
 $_SESSION["idPackage"]=$_POST["idPackage"];
@@ -24,7 +24,7 @@ header('Content-Type: application/json');
 $YOUR_DOMAIN = 'http://localhost/PA2022/MBKPA_Website';
 
 $checkout_session = \Stripe\Checkout\Session::create([
-    'customer' => 'cus_LlORm4gq1T7uUU',
+    'customer' => $idStripe,
     'line_items' => [[
         # Provide the exact Price ID (e.g. pr_1234) of the product you want to sell
         'price' => $object,
