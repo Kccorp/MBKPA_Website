@@ -49,7 +49,7 @@ include 'header.php';
 
                                     <?php
                                     $connection = connectDB();
-                                    $queryPrepared = $connection->prepare("SELECT *  FROM ".PRE."package ");
+                                    $queryPrepared = $connection->prepare("SELECT idPackage, name, description, price, numberOfRide, duration, status, pricePerMin  FROM ".PRE."package ");
                                     $queryPrepared->execute();
                                     $packages = $queryPrepared->fetchAll( PDO::FETCH_ASSOC );
 
