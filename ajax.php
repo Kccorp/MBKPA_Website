@@ -47,6 +47,17 @@ if (isset($_GET['idUser']) && isset($_GET['idParams'])) {
         $queryPrepared->execute(["id_user"=>$idUser]);
     }
 
+}elseif (isset($_GET['idCoupon'])) {
+    $idCoupon = $_GET['idCoupon'];
+
+    $stripe = new \Stripe\StripeClient(
+        'sk_test_51KwpzKJW6etdvbpFazWo3CLbeSnn5VKOjpVFMTAeSHxfYlshGFvli0dFvdbdD5L1H0n6y8uzmlOXBlkvdfeUxRZW00z8fWVUDk'
+    );
+    $stripe->coupons->delete($idCoupon, []);
+
+
+
+
 } elseif (isset($_GET['searchMembers'])) {
 
     $members = $_GET['searchMembers']."%";
@@ -99,6 +110,47 @@ if (isset($_GET['idUser']) && isset($_GET['idParams'])) {
     }
 
 } elseif (isset($_GET['searchPartners'])) {
+
+    $members = $_GET['searchPartners']."%";
+
+    $connection = connectDB();
+    $queryPrepared = $connection->prepare("SELECT  idUser, partnerName, email, partnerAddress, fidelityPoints FROM ".PRE."user WHERE isPartner=1 and ( partnerName LIKE :partnerName or email LIKE :email or partnerAddress LIKE :partnerAddress or idUser LIKE :idUser)  ");
+    $queryPrepared->execute(["partnerName"=>$members, "email"=>$members, "partnerAddress"=>$members,  "idUser"=>$members]);
+    $results = $queryPrepared->fetchALL(PDO::FETCH_ASSOC);
+
+    foreach ($results as $partners => $infopartners ) {
+        foreach ($infopartners as $cle => $info) {
+            if ($cle == "idUser") {
+                echo "<th scope=row>".$info."</th>";
+            } elseif ($cle == "email" || $cle == "partnerName" || $cle == "partnerAddress") {
+                echo "<td>".$info."</td>";
+
+            }elseif ($cle == "fidelityPoints") {
+                echo "<td class='text-center'>".$info."</td>";
+            }
+        }
+
+
+        foreach ($infopartners as $cle => $info) {
+            if ($cle == 'idUser') {
+                echo '<div class="dropdown">';
+
+                echo '<td><button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+                echo '<img src="Assets/Pictures/211751_gear_icon.svg" width="20px"  id='.$info.'>';
+                echo '</button>';
+                echo '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">';
+                echo '<a onclick="changeStatus(6,'.$info.')" class="dropdown-item" href="#">Retirer Partenaire</a>';
+                echo '<a onclick="changeStatus(7,'.$info.')" class="dropdown-item" href="#">Supprimer le compte</a>';
+                echo '</div>';
+
+                echo '</div></td>';
+
+            }
+        }
+        echo "</tr>";
+    }
+
+}elseif (isset($_GET['searchPartners'])) {
 
     $members = $_GET['searchPartners']."%";
 

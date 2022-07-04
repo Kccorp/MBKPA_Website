@@ -212,6 +212,7 @@ function createConvertPromoCode($idStripe,$couponId,$email){
         'customer' => $idStripe,
 
     ]);
+
     $connection = connectDB();
     $queryPrepared = $connection->prepare("UPDATE " . PRE . "user SET fidelityPoints = :points  WHERE idStripe = :idStripe");
     $queryPrepared->execute(["idStripe" =>$idStripe, "points" => 0]);
@@ -224,15 +225,75 @@ function createConvertPromoCode($idStripe,$couponId,$email){
 </head>
 <body>
 <p>
-    bonjour voici votre code promo : '.$code["code"].' de '.$code["amount_off"].' € !
+    bonjour voici votre code promo : '.$code["code"].' de '.number_format($code["amount_off"]/100,2).' € !
 </p>
 
 </body>
 </html>';
     sendMail($email,$content,'Votre Code Promo !');
-    header("Location: profil.php?".$code["code"]);
+    header("Location: profil.php");
     die();
 }
+function createAdminPromoCode($amount,$isPercent,$name){
+    $stripe = new \Stripe\StripeClient(
+        'sk_test_51KwpzKJW6etdvbpFazWo3CLbeSnn5VKOjpVFMTAeSHxfYlshGFvli0dFvdbdD5L1H0n6y8uzmlOXBlkvdfeUxRZW00z8fWVUDk'
+    );
+
+    $coupons = $stripe->coupons->all(['limit' => 100]);
+
+if (!$isPercent){
+    $amount=round($amount, 0);
+    $amount = $amount*100;
+}
+    foreach ($coupons['data'] as $coupon) {
+        if($isPercent) {
+            if ($coupon['percent_off'] == $amount) {
+                 $stripe->promotionCodes->create([
+                    'coupon' => $coupon['id'],
+                    'code' => $name,
+
+
+
+                ]);
+            }
+        }elseif (!$isPercent){
+            if ($coupon['amount_off'] == $amount) {
+                 $stripe->promotionCodes->create([
+                    'coupon' => $coupon['id'],
+                    'code' => $name,
+
+                ]);
+            }
+        }
+
+    }
+    if ($isPercent) {
+        $createcoup = $stripe->coupons->create([
+            'percent_off' => $amount,
+            'name' => $name,
+        ]);
+         $stripe->promotionCodes->create([
+            'coupon' => $createcoup["id"],
+            'code' => $name,
+
+        ]);
+    }elseif (!$isPercent) {
+        $createcoup = $stripe->coupons->create([
+            'amount_off' => $amount,
+            'currency' => 'eur',
+            'name' => $name,
+        ]);
+         $stripe->promotionCodes->create([
+            'coupon' => $createcoup["id"],
+            'code' => $name,
+
+        ]);
+    }
+
+    header("Location: profil.php");
+    die();
+}
+
 
 class BackController{
     public static function upload($message){

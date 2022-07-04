@@ -27,7 +27,9 @@ $stripe->coupons->all(['limit' => 3]);
 //echo $code["code"];
 
 //print all the amount
-$coupons = $stripe->coupons->all(['limit' => 3]);
+
+
+$coupons = $stripe->coupons->all(['limit' => 100]);
 
 foreach ($coupons['data'] as $coupon) {
 
@@ -39,9 +41,9 @@ foreach ($coupons['data'] as $coupon) {
 $createcoup=$stripe->coupons->create([
     'amount_off' => $codeAmount,
     'currency' => 'eur',
-    'name' => 'Coupon de ' . $codeAmount . '€',
+    'name' => ' conversion Coupon de ' . number_format($codeAmount/100,2) . '€',
 ]);
-createConvertPromoCode($_SESSION["info"]["idStripe"], $coupon['id'], $_SESSION["info"]["email"]);
+createConvertPromoCode($_SESSION["info"]["idStripe"], $createcoup['id'], $_SESSION["info"]["email"]);
 
 
 
