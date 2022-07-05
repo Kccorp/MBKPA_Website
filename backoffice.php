@@ -97,6 +97,15 @@ if (isset($_SESSION["auth"]) && $_SESSION["auth"] == "true") {
 </div>
 
 
+<p>
+    Pour gerer les partenaires et code promo.
+</p>
+<a href="backoffice_partners.php">Gerer les partenaires</a>
+
+
+
+
+
 
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"

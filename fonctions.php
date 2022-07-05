@@ -1,12 +1,14 @@
 <?php
 require "conf.inc.php";
 
+use ConvertApi\ConvertApi;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 require 'PHPMailer/src/Exception.php';
 require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/src/SMTP.php';
+require 'vendor/autoload.php';
 
 
 //fonction connexion BDD
@@ -106,14 +108,192 @@ function sendMail($email, $content, $subject){
         //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
         $mail->send();
-        //echo 'Message has been sent';
+        echo 'Message has been sent';
         return true;
     } catch (Exception $e) {
-        //echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
         return false;
     }
 
 }
+
+function addFidelPoint ($amount){
+
+    $fidelPoint = 0;
+
+    $fidelPoint = $amount*0.3;
+
+    $fidelPoint+=floor($amount/100);
+
+
+    $fidelPoint=floatval($fidelPoint);
+    $dec=$fidelPoint-floor($fidelPoint);
+    if($dec<0.5)
+        $fidelPoint = floor($fidelPoint);
+    else
+        $fidelPoint = ceil($fidelPoint);
+
+    $connection = connectDB();
+    $id=$_SESSION["info"]["idUser"];
+    $queryPrepared =  $connection->prepare("UPDATE ".PRE."user SET fidelityPoints = fidelityPoints+ :amount where idUser=:id_user");
+    $queryPrepared->execute(["id_user"=>$id, "amount"=>$fidelPoint]);
+    $_SESSION["info"]["fidelityPoints"]+=$fidelPoint;
+}
+
+
+function CreateHtmlInvoice($name,$date,$amount,$descritpion,$email,$id){
+    $filename=$id;
+    $content='<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>
+    bonjour merci pour votre achat le : '.$date.'
+    
+    
+    vous avez achetez : '.$name.'
+    
+    
+    '.$descritpion.' 
+    
+    
+    pour un total de : '.$amount.' $
+    
+    
+    merci pour votre confiance !
+</p>
+
+</body>
+</html>';
+
+
+
+    file_put_contents(__DIR__.'\\WaitforConversion\\='.$filename.'.html',$content);
+    sendMail($email,$content,'facture de votre achat');
+
+}
+//function that list all files names in a directory and return them in an array
+function listAllFiles() {
+    $ffs = scandir('./WaitforConversion');
+    unset($ffs[array_search('.', $ffs, true)]);
+    unset($ffs[array_search('..', $ffs, true)]);
+    htmltopdfAPI($ffs);
+}
+
+function htmltopdfAPI($name)
+{
+    //foreach every row of $name
+    foreach ($name as $key => $value){
+        echo $value;
+    }
+
+    ConvertApi::setApiSecret('cMqYUYuDGFG00MG8');
+    foreach ($name as $key => $value) {
+
+        $result = ConvertApi::convert('pdf', [
+            'File' => __DIR__.'/WaitforConversion/'.$value
+        ], 'html'
+        );
+        $result->saveFiles(__DIR__.'/invoices');
+        unlink(__DIR__.'/WaitforConversion/'.$value);
+}
+}
+
+function createConvertPromoCode($idStripe,$couponId,$email){
+    $stripe = new \Stripe\StripeClient(
+        'sk_test_51KwpzKJW6etdvbpFazWo3CLbeSnn5VKOjpVFMTAeSHxfYlshGFvli0dFvdbdD5L1H0n6y8uzmlOXBlkvdfeUxRZW00z8fWVUDk'
+    );
+    $code = $stripe->promotionCodes->create([
+        'coupon' => $couponId,
+        'max_redemptions' => 1,
+        'customer' => $idStripe,
+
+    ]);
+
+    $connection = connectDB();
+    $queryPrepared = $connection->prepare("UPDATE " . PRE . "user SET fidelityPoints = :points  WHERE idStripe = :idStripe");
+    $queryPrepared->execute(["idStripe" =>$idStripe, "points" => 0]);
+
+    $content='<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>
+    bonjour voici votre code promo : '.$code["code"].' de '.number_format($code["amount_off"]/100,2).' € !
+</p>
+
+</body>
+</html>';
+    sendMail($email,$content,'Votre Code Promo !');
+    header("Location: profil.php");
+    die();
+}
+function createAdminPromoCode($amount,$isPercent,$name){
+    $stripe = new \Stripe\StripeClient(
+        'sk_test_51KwpzKJW6etdvbpFazWo3CLbeSnn5VKOjpVFMTAeSHxfYlshGFvli0dFvdbdD5L1H0n6y8uzmlOXBlkvdfeUxRZW00z8fWVUDk'
+    );
+
+    $coupons = $stripe->coupons->all(['limit' => 100]);
+
+if (!$isPercent){
+    $amount=round($amount, 0);
+    $amount = $amount*100;
+}
+    foreach ($coupons['data'] as $coupon) {
+        if($isPercent) {
+            if ($coupon['percent_off'] == $amount) {
+                 $stripe->promotionCodes->create([
+                    'coupon' => $coupon['id'],
+                    'code' => $name,
+
+
+
+                ]);
+            }
+        }elseif (!$isPercent){
+            if ($coupon['amount_off'] == $amount) {
+                 $stripe->promotionCodes->create([
+                    'coupon' => $coupon['id'],
+                    'code' => $name,
+
+                ]);
+            }
+        }
+
+    }
+    if ($isPercent) {
+        $createcoup = $stripe->coupons->create([
+            'percent_off' => $amount,
+            'name' => $name,
+        ]);
+         $stripe->promotionCodes->create([
+            'coupon' => $createcoup["id"],
+            'code' => $name,
+
+        ]);
+    }elseif (!$isPercent) {
+        $createcoup = $stripe->coupons->create([
+            'amount_off' => $amount,
+            'currency' => 'eur',
+            'name' => $name,
+        ]);
+         $stripe->promotionCodes->create([
+            'coupon' => $createcoup["id"],
+            'code' => $name,
+
+        ]);
+    }
+
+    header("Location: profil.php");
+    die();
+}
+
 
 class BackController{
     public static function upload($message){

@@ -36,28 +36,40 @@ include 'header.php';
                                 <tr>
                                     <th scope="col">ID</th>
                                     <th scope="col">Nom</th>
+                                    <th scope="col">Description</th>
                                     <th scope="col">Prix</th>
                                     <th scope="col">Trajet</th>
+                                    <th scope="col">durée</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">PPM</th>
-                                    <th scope="col">Description</th>
+
                                 </tr>
                                 </thead>
                                 <div id="searchSub" >
 
                                     <?php
                                     $connection = connectDB();
-                                    $queryPrepared = $connection->prepare("SELECT *  FROM ".PRE."package ");
+                                    $queryPrepared = $connection->prepare("SELECT idPackage, name, description, price, numberOfRide, duration, status, pricePerMin  FROM ".PRE."package ");
                                     $queryPrepared->execute();
                                     $packages = $queryPrepared->fetchAll( PDO::FETCH_ASSOC );
 
                                     foreach ($packages as $package => $infopakage ) {
                                     foreach ($infopakage as $key => $value){
                                         if ($key == 'idPackage'){
-                                            echo "<th scope=row>".$value."</th>";
-                                        } elseif ($key == "name" || $key == "price" || $key == "pricePerMin" || $key == "description" ){
+                                            echo "<th scope=row>".$value."</th scope=row>";
+                                        } elseif ($key == "name" ){
                                             echo "<td>".$value."</td>";
-                                        } elseif ( $key == "duration" || $key == "status"){
+                                        }elseif ( $key == "price" ){
+                                            echo "<td>".$value."</td>";
+                                        }elseif ($key == "numberOfRide"  ){
+                                            echo "<td>".$value."</td>";
+                                        }elseif ( $key == "duration" ){
+                                            echo "<td>".$value."</td>";
+                                        } elseif ( $key == "status" ){
+                                            echo "<td>".$value."</td>";
+                                        }elseif ($key == "pricePerMin" ){
+                                            echo "<td>".$value."</td>";
+                                        }elseif ( $key == "description"){
                                             echo "<td>".$value."</td>";
                                         }
                                     }
@@ -147,8 +159,24 @@ include 'header.php';
                                                 </div>
                                             </div>
 
+                                            <div class="row my-3">
+                                                <div class="form-group col-12" >
+                                                    <label for="package-name" class="col-form-label col-2">Id Strip : </label>
+                                                    <input type="text" class="col-6" name="idStrip" value="<?php echo $infopakage["idStripe"] ?>" placeholder="<?php echo $infopakage["idStripe"] ?>">
+                                                    <div class="row">
+                                                        <a href="https://dashboard.stripe.com/test/products?active=true" target="_blank"><small class="form-text text-muted" >Veuillez créer un identifiant Strip depuis leur site </small></a>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
                                             <div class="form-group my-2">
-                                                <label for="recipient-name" class="col-form-label col-5">Nombre de trajets :</label>
+                                                <label for="recipient-name" class="col-form-label col-5">Nombre de trajets (-1 pour illimités) :</label>
+                                                <input type="text" class="col-4" name="duration" value="<?php echo $infopakage["numberOfRide"]; ?>">
+                                            </div>
+
+                                            <div class="form-group my-2">
+                                                <label for="recipient-name" class="col-form-label col-5">Durée (en jours) :</label>
                                                 <input type="text" class="col-4" name="duration" value="<?php echo $infopakage["duration"]; ?>">
                                             </div>
 
@@ -459,7 +487,16 @@ include 'header.php';
                                     <input type="text" class="col-4" name="pricePerMin" > €
                                 </div>
                             </div>
+                            <div class="row my-3">
+                                <div class="form-group col-12" >
+                                    <label for="package-name" class="col-form-label col-2">Id Strip : </label>
+                                    <input type="text" class="col-6" name="idStrip">
+                                    <div class="row">
+                                        <a href="https://dashboard.stripe.com/test/products?active=true" target="_blank"><small class="form-text text-muted" >Veuillez créer un identifiant Strip depuis leur site </small></a>
+                                    </div>
 
+                                </div>
+                            </div>
                             <div class="row my-3">
                                 <div class="form-group">
                                     <label for="recipient-name" class="col-form-label col-2">Status :</label>
@@ -473,7 +510,14 @@ include 'header.php';
 
                             <div class="row my-3">
                                 <div class="form-group">
-                                    <label for="recipient-name" class="col-form-label col-5">Nombre de trajets :</label>
+                                    <label for="recipient-name" class="col-form-label col-5">Nombre de trajets (-1 pour illimités) :</label>
+                                    <input type="text" class="col-4" name="numberOfRide" >
+                                </div>
+                            </div>
+
+                            <div class="row my-3">
+                                <div class="form-group">
+                                    <label for="recipient-name" class="col-form-label col-5">Durée (en jours) :</label>
                                     <input type="text" class="col-4" name="duration" >
                                 </div>
                             </div>

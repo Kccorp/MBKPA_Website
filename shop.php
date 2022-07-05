@@ -27,6 +27,14 @@ require __DIR__ . "/banner.php";
                     <h5 class="card-title mt-auto"><?php echo $infoMerch["name"] ?></h5>
                     <p class="card-text "><?php echo $infoMerch["fullname"] ?></p>
                     <p class="card-text "><?php echo $infoMerch["price"] ?> €</p>
+
+                    <form action='create-checkout-session.php' method='post'>
+                        <?php echo "<input type='hidden' name='id' value='".$infoMerch["idStripe"]."'>";?>
+
+                        <button type='submit'>Acheter</button></form>
+
+
+
                     <a href="item.php?idMerchandise=<?php echo $infoMerch["idMerchandise"] ?>" class="btn btn-primary ">Voir l'article</a>
                 </div>
             </div>

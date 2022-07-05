@@ -26,7 +26,11 @@ require 'header.php';
  }
 
 $connect = connectDb();
+<<<<<<< HEAD
 $queryPrepare = $connect->prepare("SELECT idPackage, name, price, description, pricePerMin FROM ".PRE."package where name='$_GET[name]'");
+=======
+$queryPrepare = $connect->prepare("SELECT * FROM ".PRE."package where name='$_GET[name]'");
+>>>>>>> milan/payment
 $queryPrepare->execute();
 $result = $queryPrepare->fetchAll(PDO::FETCH_ASSOC);
 
@@ -41,12 +45,32 @@ foreach ($result as $row ){
         </div>
         <div class="col-3 card p-3 text-center">
             <h3><?php echo $row['price']?>€</h3>
-            <?php if (!is_null($row['pricePerMin']))
+            <?php if ($row['pricePerMin']!=0)
               echo  "<p>(+   ".$row['pricePerMin']."€/min)</p>";
+            if ($row['numberOfRide'] == -1){
+                echo "<p>Nombres de trajet illimités</p>";
+}else {
+                echo "<p>Nombres de trajet : " . $row['numberOfRide'] . "</p>";
+            }
+            echo "<p>Durée de la formule : ".$row['duration']." Jours</p>";
+            echo "<p>Prix : ".$row['price']."€</p>";
             ?>
-            <a href="setSub.php?id=<?php echo $row['idPackage']; ?>">
-                <button class="btn btn-primary shadow-sm"> Choisir cette formule </button>
-            </a>
+
+
+
+
+            <form action='create-checkout-session.php' method='post'>
+                <?php echo "<input type='hidden' name='id' value='".$row["idStripe"]."'>";
+                 echo "<input type='hidden' name='isPackage' value='1'>";
+                echo "<input type='hidden' name='idPackage' value='".$row["idPackage"]."'>";
+                 if ($row['numberOfRide'] != -1)
+                    echo "<input type='hidden' name='numberOfRide' value='".$row["numberOfRide"]."'>";
+                echo "<input type='hidden' name='duration' value='".$row["duration"]."'>";
+
+                    ?>
+
+
+                <button type='submit'>Choisir cette formule</button></form>
 
         </div>
     </div>
