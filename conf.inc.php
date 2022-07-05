@@ -14,3 +14,6 @@ const EMAILPORT = "465";
 
 const SITE_API_CAPTCHA = "6Lf_dnsfAAAAAD49EG56pdgOjr35V43EWtB-6E3E";
 const SECRETE_API_CAPTCHA = "6Lf_dnsfAAAAAPWcDhSQV1gZa70lRbBHCZozRK4N";
+
+const TARGET = 'Assets/Shop/';    // Repertoire cible
+const MAX_SIZE = 10000000;    // Taille max en octets du fichier

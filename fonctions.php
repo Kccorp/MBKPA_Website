@@ -114,3 +114,56 @@ function sendMail($email, $content, $subject){
     }
 
 }
+
+class BackController{
+    public static function upload($message){
+        if (!empty($_FILES['fichier']['name'])) {
+            $tabExt = array('jpg', 'png', 'jpeg');
+            // Recuperation de l'extension du fichier
+            $extension = pathinfo($_FILES['fichier']['name'], PATHINFO_EXTENSION);
+
+            // On verifie l'extension du fichier
+            if (in_array(strtolower($extension), $tabExt)) {
+
+                // On recupere les dimensions du fichier
+                $infosImg = getimagesize($_FILES['fichier']['tmp_name']);
+                // On verifie le type de l'image
+                if ($infosImg[2] >= 1 && $infosImg[2] <= 14) {
+                    // On verifie les dimensions et taille de l'image
+                    if ((filesize($_FILES['fichier']['tmp_name']) <= MAX_SIZE)) {
+                        // Parcours du tableau d'erreurs
+                        if (isset($_FILES['fichier']['error']) && UPLOAD_ERR_OK === $_FILES['fichier']['error']) {
+                            // On renomme le fichier
+                            $nomImage = md5(uniqid()) . '.' . $extension;
+                            // Si c'est OK, on teste l'upload
+                            if (move_uploaded_file($_FILES['fichier']['tmp_name'], TARGET . $nomImage)) {
+
+                                return [TARGET . $nomImage, 0];
+
+
+                            } else {
+                                // Sinon on affiche une erreur systeme
+                                return $message = 'Problème lors de l\'upload de l\'image !';
+                            }
+                        } else {
+                            $message = 'Une erreur interne a empêché l\'uplaod de l\'image';
+                        }
+                    } else {
+                        // Sinon erreur sur les dimensions et taille de l'image
+                        $message = 'Le fichier est trop gros ! max : 10Mo';
+                    }
+                } else {
+                    // Sinon erreur sur le type de l'image
+                    $message = 'Format autorisé : jpg, png, jpeg';
+                }
+            } else {
+                // Sinon on affiche une erreur pour l'extension
+                $message = 'L\'extension du fichier est incorrecte !';
+            }
+        } else {
+            return [" ", 0];
+        }
+        return [0, $message];
+    }
+
+}
