@@ -21,3 +21,7 @@ const SECRETE_API_STP = "aremplir";
 
 const TARGET = 'Assets/Shop/';    // Repertoire cible
 const MAX_SIZE = 10000000;    // Taille max en octets du fichier
+
+
+const LOTTE_PINK = "#d57ab0";
+const LOTTE_GREEN = "#57a774";

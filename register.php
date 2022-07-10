@@ -20,7 +20,6 @@ if ( count($_POST) == 6
 
     if (checkForCaptcha() == true){
 
-
         $nom = trim($_POST["nom"]);
         $prenom = trim($_POST["prenom"]);
         $email = mb_strtolower(trim($_POST["email"]));
@@ -82,7 +81,7 @@ if ( count($_POST) == 6
             $queryPrepared =  $connection->prepare("INSERT INTO ".PRE."user (name, lastName, password, email, idStripe) VALUES ( :name, :lastName , :pwd, :email, :idStripe);");
             $pwd = password_hash($pwd, PASSWORD_DEFAULT);
 
-            $queryPrepared->execute(["name"=>$nom, "lastName"=>$prenom, "pwd"=>$pwd, "email"=>$email, "idStripe"=>$idStripe]);
+            $queryPrepared->execute(["name"=>$nom, "lastName"=>$prenom, "pwd"=>$pwd, "email"=>$email]);
 
             $queryPrepared = $connection->prepare("SELECT * FROM ".PRE."User WHERE email=:email");
             $queryPrepared->execute(["email"=>$email]);
