@@ -1,11 +1,12 @@
 <?php
-include 'header.php';
+require __DIR__ . "/header.php";
+require __DIR__ . "/banner.php";
 if (isset($_SESSION["auth"]) && $_SESSION["auth"] == "true") {
 
 }
 ?>
 
-    <section class="dashboard">
+    <section class="home dashboard">
         <div class="top">
             <i class="uil uil-bars sidebar-toggle"></i>
         </div>

@@ -1,11 +1,11 @@
 <?php
-include 'header.php';
+require __DIR__ . "/header.php";
+require __DIR__ . "/banner.php";
 if (isset($_SESSION["auth"]) && $_SESSION["auth"] == "true") {
 
 }
 ?>
-
-    <section class="dashboard">
+    <section class="dashboard home">
 
         <div class="dash-content">
             <div class="overview">
@@ -100,7 +100,6 @@ if (isset($_SESSION["auth"]) && $_SESSION["auth"] == "true") {
             </div>
         </div>
     </section>
-
     <!--<script src="script.js"></script>-->
 
 

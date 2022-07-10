@@ -1,5 +1,6 @@
 <?php
-require 'header.php';
+require __DIR__ . "/header.php";
+require __DIR__ . "/banner.php";
 ?>
 
 <div style="background-image: url('Assets/Pictures/formules.jpg'); background-size: cover;     background-position: center center;height: auto;min-height: 20em;">
@@ -26,11 +27,8 @@ require 'header.php';
  }
 
 $connect = connectDb();
-<<<<<<< HEAD
 $queryPrepare = $connect->prepare("SELECT idPackage, name, price, description, pricePerMin FROM ".PRE."package where name='$_GET[name]'");
-=======
 $queryPrepare = $connect->prepare("SELECT * FROM ".PRE."package where name='$_GET[name]'");
->>>>>>> milan/payment
 $queryPrepare->execute();
 $result = $queryPrepare->fetchAll(PDO::FETCH_ASSOC);
 

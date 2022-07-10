@@ -157,7 +157,7 @@
 
                             echo '<li class="">';
                                 echo '<a href="index.php">';
-                                    echo '<button class="modal-btn modal-trigger bx bxs-wrench icon"></button>';
+                                    echo '<i class="modal-btn modal-trigger bx bxs-wrench icon"></i>';
                                     echo '<span class="text nav-text">Paramètres</span>';
                                     echo '</a>';
                                 echo '</li>';

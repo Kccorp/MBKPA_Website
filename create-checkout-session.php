@@ -21,7 +21,7 @@ require 'vendor/autoload.php';
 
 header('Content-Type: application/json');
 
-$YOUR_DOMAIN = 'http://localhost/PA2022/MBKPA_Website';
+$YOUR_DOMAIN = 'http://localhost';
 
 $checkout_session = \Stripe\Checkout\Session::create([
     'customer' => $idStripe,

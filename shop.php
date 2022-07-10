@@ -1,6 +1,8 @@
 <?php
 require __DIR__ . "/header.php";
 require __DIR__ . "/banner.php";
+?>
+
 
 <div class="container ">
     <div class="row">

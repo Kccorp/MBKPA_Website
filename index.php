@@ -14,20 +14,9 @@ if (isset($_SESSION["auth"]) && $_SESSION["auth"] == "true") {
 <body>
 
 <section class="home">
-    edjozefze
-    <h1>Voici du contenu</h1>
-<div class="modal-container">
-    edjozefze
-    <h1>Voici du contenu</h1>
-    <div class="overlay modal-trigger">edjozefze
-        <h1>Voici du contenu</h1></div>
-
-    <div class="modal">
-        <button class="close-modal modal-trigger">X</button>
-        <h1>Voici du contenu</h1>
-        <p>lorem ipsum</p>
-    </div>
-</div>
+   <div class="first" style="background-color: #0033ff; height: 20vh; left: 0">
+       Test
+   </div>
 </section>
 
 <?php
