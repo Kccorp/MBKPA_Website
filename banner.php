@@ -47,7 +47,7 @@
                         echo '</li>';
                     echo '';
                     echo '<li class="nav-link">';
-                        echo '<a href="analytics.php">';
+                        echo '<a href="tracking.php">';
                             echo '<i class="bx bxs-bar-chart-alt-2 icon"></i>';
                             echo '<span class="text nav-text">Analytics</span>';
                             echo '</a>';

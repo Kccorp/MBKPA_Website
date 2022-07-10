@@ -5,7 +5,7 @@ if (isset($_SESSION["auth"]) && $_SESSION["auth"] == "true") {
 
 }
 ?>
-    <section class="dashboard home">
+    <section class="dashboard home" style="margin-left: 10%; margin-right: 25%">
 
         <div class="dash-content">
             <div class="overview">

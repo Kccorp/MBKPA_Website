@@ -1,8 +1,11 @@
 <?php
-require 'header.php';
+require __DIR__ . "/header.php";
+require __DIR__ . "/banner.php";
 ?>
 
 <!-- Statistiques section -->
+<section class="home">
+
 <div class="container">
     <div class="row">
         <div class="row">
@@ -148,6 +151,7 @@ require 'header.php';
 </div>
 
 
+</section>
 
 
 
