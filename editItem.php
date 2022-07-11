@@ -74,5 +74,5 @@ if (isset($_SESSION['auth']) && isset($_SESSION['info']) && $_SESSION['auth'] &&
     }
 }
 
-header('Location: catalog.php#product');
+header('Location: gestion_items.php');
 

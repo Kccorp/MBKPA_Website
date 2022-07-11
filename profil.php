@@ -1,10 +1,15 @@
 <?php
-require 'header.php';
+require __DIR__ . "/header.php";
+require __DIR__ . "/banner.php";
+
 require 'vendor/autoload.php';
 $stripe = new \Stripe\StripeClient(
     'sk_test_51KwpzKJW6etdvbpFazWo3CLbeSnn5VKOjpVFMTAeSHxfYlshGFvli0dFvdbdD5L1H0n6y8uzmlOXBlkvdfeUxRZW00z8fWVUDk'
 );
+?>
 
+    <div class="home">
+<?php
 if (isset($_SESSION["auth"]) && $_SESSION["auth"] == "true") {
 
     echo "<div class='alert alert-success'>";
@@ -20,7 +25,6 @@ $results = $queryPrepared->fetch();
 $_SESSION["info"]["fidelityPoints"] = $results["fidelityPoints"];
 $points=$_SESSION["info"]["fidelityPoints"];
 ?>
-
 
 <p>votre total de point est de <?php echo $points ?></p>
 <?php if ($points!=0){ ?>
@@ -78,7 +82,7 @@ $points=$_SESSION["info"]["fidelityPoints"];
 
 
 
-
+</div>
 
 
 

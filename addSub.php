@@ -53,5 +53,5 @@ if ( count($_POST) == 8 &&
     }
 }
 
-header("Location: catalog.php");
+header("Location: dashboard.php");
 ?>

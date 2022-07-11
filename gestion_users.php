@@ -5,7 +5,7 @@ if (isset($_SESSION["auth"]) && $_SESSION["auth"] == "true") {
 
 }
 ?>
-    <section class="dashboard home" style="margin-left: 10%; margin-right: 25%">
+    <section class="home" style="">
 
         <div class="dash-content">
             <div class="overview">
@@ -100,7 +100,7 @@ if (isset($_SESSION["auth"]) && $_SESSION["auth"] == "true") {
             </div>
         </div>
     </section>
-    <!--<script src="script.js"></script>-->
+    <script src="js/backoffice.js"></script>
 
 
 <?php

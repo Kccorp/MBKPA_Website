@@ -14,7 +14,7 @@ if (isset($_SESSION['auth']) && isset($_SESSION['info']) && $_SESSION['auth'] &&
         if (!$path) {
             $listOfErrorsShop[] = $message;
             $_SESSION["listOfErrorsShop"] = $listOfErrorsShop;
-            header('Location: catalog.php#product');
+            header('Location: gestion_items.php');
         }
     }
 
@@ -68,7 +68,7 @@ if (isset($_SESSION['auth']) && isset($_SESSION['info']) && $_SESSION['auth'] &&
         }
     }
 }
-header('Location: catalog.php#product');
+header('Location: gestion_items.php');
 
 
 

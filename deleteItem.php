@@ -13,4 +13,4 @@ if ($_SESSION['auth'] && is_numeric($_GET['idItem'])){
 
 }
 
-header('Location: catalog.php#product');
+header('Location: index.php gestion_items.php');

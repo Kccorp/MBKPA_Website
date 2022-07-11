@@ -33,14 +33,14 @@
                         echo '</li>';
                     echo '';
                     echo '<li class="nav-link">';
-                        echo '<a href="localisation.php">';
-                            echo '<i class="fa fa-street-view icon" ></i>';
-                            echo '<span class="text nav-text">Gestion des items</span>';
+                        echo '<a href="gestion_items.php">';
+                            echo '<i class="fa fa-cogs icon" ></i>';
+                            echo '<span class="text nav-text">Shop</span>';
                             echo '</a>';
                         echo '</li>';
                     echo '';
                     echo '<li class="nav-link">';
-                        echo '<a href="formules.php">';
+                        echo '<a href="gestion_formules.php">';
                             echo '<i class="fa fa-list-ul icon"></i>';
                             echo '<span class="text nav-text">Formules</span>';
                             echo '</a>';

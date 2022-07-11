@@ -20,5 +20,5 @@ if (!empty($_SESSION["listOfErrors"])) {
 
 
 <?php
-include 'footer.php';
+require __DIR__ . "/footer.php";
 ?>
