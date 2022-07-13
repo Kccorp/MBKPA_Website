@@ -55,15 +55,17 @@ $points=$_SESSION["info"]["fidelityPoints"];
         <?php
         $coupons = $stripe->promotionCodes->all(['limit' => 100,'active' => true]);
         foreach ($coupons['data'] as $coupon) {
-            echo "<tr>";
+            if($coupon['customer']==$_SESSION['info']['idStripe']) {
+                echo "<tr>";
 
-            echo "<td>" . $coupon['code'] . "</td>";
-            if ($coupon['coupon']['amount_off'] == null) {
-                echo "<td>" . $coupon['coupon']['percent_off'] . "%</td>";
-            } else {
-                echo "<td>" . number_format($coupon['coupon']['amount_off']/100,2) . "€</td>";
+                echo "<td>" . $coupon['code'] . "</td>";
+                if ($coupon['coupon']['amount_off'] == null) {
+                    echo "<td>" . $coupon['coupon']['percent_off'] . "%</td>";
+                } else {
+                    echo "<td>" . number_format($coupon['coupon']['amount_off'] / 100, 2) . "€</td>";
+                }
+                echo "<td>" . $coupon['coupon']['name'] . "</td>";
             }
-            echo "<td>" . $coupon['coupon']['name'] . "</td>";
 
 
 

@@ -8,25 +8,8 @@ echo $codeAmount;
 $stripe = new \Stripe\StripeClient(
     'sk_test_51KwpzKJW6etdvbpFazWo3CLbeSnn5VKOjpVFMTAeSHxfYlshGFvli0dFvdbdD5L1H0n6y8uzmlOXBlkvdfeUxRZW00z8fWVUDk'
 );
-$stripe->coupons->all(['limit' => 3]);
-
-//print response of stripe
-//echo "<pre>";
-//print_r($stripe->coupons->all(['limit' => 3]));
 
 
-
-//$code=$stripe->promotionCodes->create([
-//    'coupon' => $coupon['id'],
-//    'max_redemptions' => 1,
-//    'customer' => $_SESSION["info"]["idStripe"],
-//
-//]);
-//
-//
-//echo $code["code"];
-
-//print all the amount
 
 
 $coupons = $stripe->coupons->all(['limit' => 100]);
@@ -44,6 +27,7 @@ $createcoup=$stripe->coupons->create([
     'name' => ' conversion Coupon de ' . number_format($codeAmount/100,2) . '€',
 ]);
 createConvertPromoCode($_SESSION["info"]["idStripe"], $createcoup['id'], $_SESSION["info"]["email"]);
+
 
 
 

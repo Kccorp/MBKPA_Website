@@ -3,12 +3,13 @@ session_start();
 require 'fonctions.php';
 
 
-if ( count($_POST) == 4 &&
-    is_numeric($_GET["idPackage"]) &&
-    is_numeric($_POST["price"]) &&
-    is_numeric($_POST["pricePerMin"]) &&
-    is_numeric($_POST["duration"]) &&
-    $_SESSION["auth"] && $_SESSION["info"]["isAdmin"]
+if ($_SESSION["auth"] && $_SESSION["info"]["isAdmin"] &&
+    count($_POST) > 1 && (
+    is_numeric($_GET["idPackage"]) ||
+    is_numeric($_POST["price"]) ||
+    is_numeric($_POST["pricePerMin"]) ||
+    is_numeric($_POST["duration"])
+    )
 ) {
 
     $price = trim($_POST["price"]);
