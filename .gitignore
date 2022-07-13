@@ -1,0 +1,8 @@
+
+*.phar
+
+vendor/
+
+*.json
+
+*.lock
