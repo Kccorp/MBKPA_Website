@@ -64,7 +64,7 @@ function sendRegisterMail($email){
 			    <br>
                 Mot de passe : xxxxxx
                 <br>
-                <a src="http://localhost:63342/Lotte_PA/index.php">
+                <a src="i/ndex.php">
                     <button class="btn btn-primary">Se connecter</button>
                 </a>
             </p>
@@ -217,7 +217,7 @@ function createConvertPromoCode($idStripe,$couponId,$email){
     $queryPrepared = $connection->prepare("UPDATE " . PRE . "user SET fidelityPoints = :points  WHERE idStripe = :idStripe");
     $queryPrepared->execute(["idStripe" =>$idStripe, "points" => 0]);
 
-    $content='<!DOCTYPE html>
+   /* $content='<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -230,10 +230,12 @@ function createConvertPromoCode($idStripe,$couponId,$email){
 
 </body>
 </html>';
-    sendMail($email,$content,'Votre Code Promo !');
+    sendMail($email,$content,'Votre Code Promo !');*/
     header("Location: profil.php");
     die();
 }
+
+
 function createAdminPromoCode($amount,$isPercent,$name){
     $stripe = new \Stripe\StripeClient(
         'sk_test_51KwpzKJW6etdvbpFazWo3CLbeSnn5VKOjpVFMTAeSHxfYlshGFvli0dFvdbdD5L1H0n6y8uzmlOXBlkvdfeUxRZW00z8fWVUDk'

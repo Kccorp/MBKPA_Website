@@ -19,9 +19,9 @@ if (count($_POST)==3
 
 
         if(empty($results)){
-            echo '<div class="alert alert-danger">Identifiants incorrects</div>';
+            echo "<script type='text/javascript'>alert('Identifiants incorrects');</script>";
         }elseif ($results["isBanned"] == 1) {
-            echo '<div class="alert alert-danger">Vous êtes BAN (sorry or not sorry)</div>';
+            echo "<script type='text/javascript'>alert('Tu es ban');</script>";
         }else if( password_verify($pwd, $results["password"])){
 
             $_SESSION["auth"]=true;
@@ -31,7 +31,7 @@ if (count($_POST)==3
             header("Location:index.php");
 
         }else{
-            echo '<div class="alert alert-danger">Identifiants incorrects</div>';
+            echo "<script type='text/javascript'>alert('Identifiants incorrects');</script>";
         }
     }
 }

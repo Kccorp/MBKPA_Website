@@ -1,5 +1,11 @@
 <?php
 include 'header.php';
+include 'banner.php';
+
+?>
+<section class="home">
+
+<?php
 require 'vendor/autoload.php';
 $_POST["points"];
 $codeAmount=$_POST["points"]*0.2;
@@ -10,25 +16,6 @@ $stripe = new \Stripe\StripeClient(
 );
 $stripe->coupons->all(['limit' => 3]);
 
-//print response of stripe
-//echo "<pre>";
-//print_r($stripe->coupons->all(['limit' => 3]));
-
-
-
-//$code=$stripe->promotionCodes->create([
-//    'coupon' => $coupon['id'],
-//    'max_redemptions' => 1,
-//    'customer' => $_SESSION["info"]["idStripe"],
-//
-//]);
-//
-//
-//echo $code["code"];
-
-//print all the amount
-
-
 $coupons = $stripe->coupons->all(['limit' => 100]);
 
 foreach ($coupons['data'] as $coupon) {
@@ -38,6 +25,7 @@ foreach ($coupons['data'] as $coupon) {
     }
 
 }
+
 $createcoup=$stripe->coupons->create([
     'amount_off' => $codeAmount,
     'currency' => 'eur',
@@ -46,7 +34,11 @@ $createcoup=$stripe->coupons->create([
 createConvertPromoCode($_SESSION["info"]["idStripe"], $createcoup['id'], $_SESSION["info"]["email"]);
 
 
+?>
+
+</section>
 
 
-
-
+<?php
+include "footer.php";
+?>

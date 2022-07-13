@@ -112,7 +112,7 @@ if ( count($_POST) == 6
                     <br>
                     Mot de passe : xxxxxx
                     <br>
-                    <a href="http://localhost:63342/Lotte_PA/index.php">
+                    <a href="/index.php">
                         Se connecter
                     </a>
                 </p>
