@@ -78,7 +78,7 @@ if ( count($_POST) == 6
             $idStripe = $customer->id;
 
 
-            $queryPrepared =  $connection->prepare("INSERT INTO ".PRE."user (name, lastName, password, email, idStripe) VALUES ( :name, :lastName , :pwd, :email, :idStripe);");
+            $queryPrepared =  $connection->prepare("INSERT INTO ".PRE."user (name, lastName, password, email) VALUES ( :name, :lastName , :pwd, :email);");
             $pwd = password_hash($pwd, PASSWORD_DEFAULT);
 
             $queryPrepared->execute(["name"=>$nom, "lastName"=>$prenom, "pwd"=>$pwd, "email"=>$email]);
@@ -123,9 +123,8 @@ if ( count($_POST) == 6
             if ( sendMail($email, $content, $subject) == true ){
                 header("Location: index.php");
             }else{
-                $listOfErrors[] =  "Erreur lors de l'envoi du mail. Veuillez réessayer plus tard";
+                echo "<script>alert('Erreur lors de l envoi du mail')</script>";
                 $_SESSION["listOfErrors"] = $listOfErrors;
-                header("Location: newUser.php");
             }
 
 

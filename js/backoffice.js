@@ -45,8 +45,8 @@ function searchMembres(ifPartner){
                 count.innerHTML = res;
             }
         };
-        if (ifPartner =! 1) {
-            req.open("GET","Ajax.php?searchMembers="+searchMembers, true);
+        if (ifPartner != 1) {
+            req.open("GET","ajax.php?searchMembers="+searchMembers, true);
         }else {
             req.open("GET", "Ajax.php?searchPartners=" + searchMembers, true);
         }

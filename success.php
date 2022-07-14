@@ -70,7 +70,7 @@ CreateHtmlInvoice($name,$date,$amount,$description,$email,$idCheck);
 </body>
 
 <?php
-//header( "refresh:5;url=index.php" );
+header( "refresh:5;url=index.php" );
 
 include 'footer.php'; ?>
 

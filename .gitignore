@@ -6,3 +6,8 @@ vendor/
 *.json
 
 *.lock
+
+.idea/
+
+
+
