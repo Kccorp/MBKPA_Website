@@ -32,7 +32,7 @@ require __DIR__ . "/banner.php";
                                     $queryPrepared = $connection->prepare("SELECT ROUND(SUM(price), 2) FROM ".PRE."ride;");
                                     $queryPrepared->execute();
                                     $results = $queryPrepared->fetch();
-                                    echo $results[0]."€";
+                                    echo $results[0]."€ (total des courses)";
                                     ?>
                                 </p>
                             </div>

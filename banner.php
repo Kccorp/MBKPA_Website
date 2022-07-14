@@ -7,7 +7,7 @@
         echo '<header>';
             echo '<div class="image-text">';
                 echo '<span class="image">';
-                        echo '<img src="assets/pictures/logo.png" alt="">';
+                        echo '<img src="Assets/pictures/logo.png" alt="">';
                         echo '</span>';
                 echo '<div class="text logo-text">';
                     echo '<span class="name">Lotte</span>';echo '<span class="profession">Dashboard</span>';
@@ -83,7 +83,7 @@
                     echo '<header>';
                         echo '<div class="image-text">';
                             echo '<span class="image">';
-                        echo '<img src="assets/pictures/logo.png" alt="">';
+                        echo '<img src="Assets/pictures/logo.png" alt="">';
                         echo '</span>';
                             echo '<div class="text logo-text">';
                                 echo '<span class="name">Lotte</span>';
@@ -117,7 +117,7 @@
                                     echo '</li>';
                                 echo '';
                                 echo '<li class="nav-link">';
-                                    echo '<a href="formules.php">';
+                                    echo '<a href="subscriptions_groups.php">';
                                         echo '<i class="bx bx-list-plus icon" ></i>';
                                         echo '<span class="text nav-text">Les formules</span>';
                                         echo '</a>';
@@ -175,7 +175,7 @@
                                 echo '<header>';
                                     echo '<div class="image-text">';
                                         echo '<span class="image">';
-                    echo '<img src="assets/pictures/logo.png" alt="">';
+                    echo '<img src="Assets/pictures/logo.png" alt="">';
                     echo '</span>';
                                         echo '<div class="text logo-text">';
                                             echo '<span class="name">Lotte</span>';
@@ -209,7 +209,7 @@
                                                 echo '</li>';
                                             echo '';
                                             echo '<li class="nav-link">';
-                                                echo '<a href="formules.php">';
+                                                echo '<a href="subscriptions_groups.php">';
                                                     echo '<i class="fa fa-list-ul icon"></i>';
                                                     echo '<span class="text nav-text">Les formules</span>';
                                                     echo '</a>';

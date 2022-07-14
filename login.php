@@ -13,7 +13,7 @@ if (count($_POST)==3
         $pwd = $_POST["password"];
 
         $connection = connectDB();
-        $queryPrepared = $connection->prepare("SELECT * FROM ".PRE."User WHERE email=:login");
+        $queryPrepared = $connection->prepare("SELECT * FROM ".PRE."user WHERE email=:login");
         $queryPrepared->execute(["login"=>$login]);
         $results = $queryPrepared->fetch(PDO::FETCH_ASSOC);
 

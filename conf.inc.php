@@ -1,10 +1,11 @@
 <?php
-const DBUSER = "zi079ph5hsli9dsz";
-const DBPWD = "uesgcm2e869kdo87";
-const DBHOST = "ilzyz0heng1bygi8.chr7pe7iynqr.eu-west-1.rds.amazonaws.com";
+const DBUSER = "admin";
+const DBPWD = "Test1234";
+const DBHOST = "87.90.32.205";
 const DBNAME = "m6qku2mxgghdq37a";
 const DBDRIVER = "mysql";
 const DBPORT = "3306";
+
 const PRE = "lotte_";
 
 const EMAILPWD = "qhDip6vtUSVuAW";

@@ -14,11 +14,10 @@ if (isset($_SESSION["auth"]) && $_SESSION["auth"] == "true") {
 
 }
 ?>
-
-
-   <div class="first" style="background-color: #0033ff; height: 20vh; left: 0">
-       Test
-   </div>
+    <h2>Testez notre simulation de location de trotinette</h2>
+    <a href="webGl.html">
+        <button type="submit" class="btn btn-primary">Ajouter</button>
+    </a>
 </section>
 
 <?php

@@ -160,7 +160,7 @@ require __DIR__ . "/banner.php";
                                             <div class="row my-3">
                                                 <div class="form-group col-12" >
                                                     <label for="package-name" class="col-form-label col-2">Id Strip : </label>
-                                                    <input type="text" class="col-6" name="idStrip" value="<?php echo $infopakage["idStripe"] ?>" placeholder="<?php echo $infopakage["idStripe"] ?>">
+                                                    <input type="text" class="col-6" name="idStrip">
                                                     <div class="row">
                                                         <a href="https://dashboard.stripe.com/test/products?active=true" target="_blank"><small class="form-text text-muted" >Veuillez créer un identifiant Strip depuis leur site </small></a>
                                                     </div>

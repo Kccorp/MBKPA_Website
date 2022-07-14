@@ -44,7 +44,6 @@ function checkForCaptcha(){
     else
         return false;
 }
-
 function sendRegisterMail($email){
     $subject = "Confirmation de votre inscription";
 
@@ -75,7 +74,6 @@ function sendRegisterMail($email){
 
     return sendMail($email, $content, $subject);
 }
-
 function sendMail($email, $content, $subject){
 
     //Instantiation and passing `true` enables exceptions
@@ -117,7 +115,6 @@ function sendMail($email, $content, $subject){
     }
 
 }
-
 function addFidelPoint ($amount,$cents){
 
     $fidelPoint = 0;
@@ -152,8 +149,6 @@ function addFidelPoint ($amount,$cents){
     echo "your current balance of fidelity points is :".$_SESSION["info"]["fidelityPoints"];
     echo "<br>";
 }
-
-
 function CreateHtmlInvoice($name,$date,$amount,$descritpion,$email,$id){
     $filename=$id;
     $content='<!DOCTYPE html>
@@ -195,7 +190,6 @@ function listAllFiles() {
     unset($ffs[array_search('..', $ffs, true)]);
     htmltopdfAPI($ffs);
 }
-
 function htmltopdfAPI($name)
 {
     //foreach every row of $name
@@ -214,7 +208,6 @@ function htmltopdfAPI($name)
         unlink(__DIR__.'/WaitforConversion/'.$value);
 }
 }
-
 function createConvertPromoCode($idStripe,$couponId,$email){
     $stripe = new \Stripe\StripeClient(
         'sk_test_51KwpzKJW6etdvbpFazWo3CLbeSnn5VKOjpVFMTAeSHxfYlshGFvli0dFvdbdD5L1H0n6y8uzmlOXBlkvdfeUxRZW00z8fWVUDk'
@@ -238,14 +231,17 @@ function createConvertPromoCode($idStripe,$couponId,$email){
 </head>
 <body>
 <p>
-    bonjour voici votre code promo : '.$code["code"].' de '.number_format($code["amount_off"]/100,2).' € !
+    bonjour voici votre code promo : '.$code["code"].' de '.number_format($code["coupon"]["amount_off"]/100,2).' euros !
 </p>
 
 </body>
 </html>';
-    sendMail($email,$content,'Votre Code Promo !');
-    header("Location: profil.php");
-    die();
+
+    if ( sendMail($email, $content, "Promo code") == true ){
+        header("Location: profil.php");
+    }else{
+        echo "<script>alert('Erreur lors de l envoi du mail')</script>";
+    }
 }
 function createAdminPromoCode($amount,$isPercent,$name){
     $stripe = new \Stripe\StripeClient(
@@ -303,7 +299,7 @@ if (!$isPercent){
         ]);
     }
 
-    header("Location: profil.php");
+    header("Location: gestion_users.php");
     die();
 }
 

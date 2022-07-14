@@ -21,9 +21,10 @@ function deleteCoupon(idCoupon){
         if (req.readyState === 4) {
             const result = req.responseText;
 
+
             //reload the window
-            //window.location.reload();
-            searchMembres();
+            window.location.reload();
+            //searchMembres();
         }
     };
 

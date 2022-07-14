@@ -40,6 +40,7 @@ if (isset($_SESSION['auth']) && isset($_SESSION['info']) && $_SESSION['auth'] &&
             $listOfErrorsShop[] = "Le nom complet de l'article ne doit pas dépasser les 100 caractères";
         }
 
+
         if (strlen($description) < 3 || strlen($description) > 500) {
             $listOfErrorsShop[] = "L'identifiant de l'article ne doit pas dépasser les 500 caractères";
         }

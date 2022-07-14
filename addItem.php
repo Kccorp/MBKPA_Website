@@ -37,7 +37,9 @@ if (isset($_SESSION['auth']) && isset($_SESSION['info']) && $_SESSION['auth'] &&
         if (strlen($name) < 3 || strlen($name) > 25) {
             $listOfErrorsShop[] = "Le nom de l'article ne doit pas dépasser les 50 caractères";
         }
-
+        if (strpos($name, ' ') !== false) {
+            $listOfErrorsShop[] = "Le nom de l'article ne doit pas contenir d'espace";
+        }
         if (strlen($fullname) < 3 || strlen($fullname) > 100) {
             $listOfErrorsShop[] = "Le nom complet de l'article ne doit pas dépasser les 100 caractères";
         }

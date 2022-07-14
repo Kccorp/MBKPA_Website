@@ -35,7 +35,7 @@ $result = $queryPrepare->fetchAll(PDO::FETCH_ASSOC);
 foreach ($result as $row ){
 
 ?>
-<div class ="container mt-5">
+<div class="container mt-5">
     <div class="row">
         <div class="col-8 me-3 card p-3" >
             <h3>Lotte <?php echo $row['name']?></h3>
@@ -73,6 +73,10 @@ foreach ($result as $row ){
         </div>
     </div>
 </div>
+</section>
 <?php
     }
+
+
+require "footer.php";
 ?>

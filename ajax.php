@@ -175,7 +175,16 @@ if (isset($_GET['idUser']) && isset($_GET['idParams'])) {
 
     echo json_encode($results);
 
-} elseif (isset($_GET['ratioDevice'])) {
+}elseif (isset($_GET['idCoupon'])) {
+    $idCoupon = $_GET['idCoupon'];
+
+    $stripe = new \Stripe\StripeClient(
+        'sk_test_51KwpzKJW6etdvbpFazWo3CLbeSnn5VKOjpVFMTAeSHxfYlshGFvli0dFvdbdD5L1H0n6y8uzmlOXBlkvdfeUxRZW00z8fWVUDk'
+    );
+    $stripe->coupons->delete($idCoupon, []);
+
+
+}elseif (isset($_GET['ratioDevice'])) {
 
     header('Content-Type: application/json');
 

@@ -26,8 +26,9 @@ $_SESSION["info"]["fidelityPoints"] = $results["fidelityPoints"];
 $points=$_SESSION["info"]["fidelityPoints"];
 ?>
 
-<p>votre total de point est de <?php echo $points ?></p>
+
 <?php if ($points!=0){ ?>
+        <p>votre total de point est de <?php echo $points ?></p>
 <p>Voulez-vous convertir vos points ?</p>
 <p>Vous pouvez actuellement convertir vos points pour <?php echo $points*0.2 ?>€</p>
 

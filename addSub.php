@@ -30,6 +30,9 @@ if (
     if ( strlen ( $name ) < 2 || strlen ( $name ) > 150 ) {
         $listOfErrors[] = "le nom de l'offre doit faire minimum 2 caractéres et maximum 150 caractéres";
     }
+    if (strpos($name, ' ') !== false) {
+        $listOfErrorsShop[] = "Le nom de l'article ne doit pas contenir d'espace";
+    }
     if ( str_word_count ( $name ) > 1 ) {
         $listOfErrors[] = "le nom de l'offre doit être en un seul mot";
     }

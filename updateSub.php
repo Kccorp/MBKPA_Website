@@ -8,9 +8,10 @@ if (
     && count( $_POST ) > 1
     && (
         is_numeric( $_GET[ "idPackage" ] )
-        || is_numeric( $_POST[ "price" ] )
-        || is_numeric( $_POST[ "pricePerMin" ] )
-        || is_numeric( $_POST[ "duration" ] )
+        && is_numeric( $_POST[ "price" ] )
+        && is_numeric( $_POST[ "pricePerMin" ] )
+        && is_numeric( $_POST[ "duration" ] )
+
     )
 ) {
 
@@ -19,11 +20,12 @@ if (
     $duration = trim($_POST["duration"]);
     $description = trim($_POST["description"]);
     $id = trim($_GET["idPackage"]);
+    $idStrip = trim($_POST["idStrip"]);
 
 
     $connection = connectDB();
-    $queryPrepared = $connection->prepare("UPDATE ".PRE."package SET price = ?, pricePerMin = ?, duration = ?, description = ? WHERE idPackage = ?");
-    $queryPrepared->execute([$price, $pricePerMin, $duration, $description, $id]);
+    $queryPrepared = $connection->prepare("UPDATE ".PRE."package SET price = ?, idStripe = ?, pricePerMin = ?, duration = ?, description = ? WHERE idPackage = ?");
+    $queryPrepared->execute([$price, $idStrip, $pricePerMin, $duration, $description, $id]);
 
 
 }

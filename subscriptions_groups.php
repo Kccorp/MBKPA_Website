@@ -1,9 +1,10 @@
 <?php
 require 'header.php';
+require 'banner.php';
 ?>
-
-<div style="background-image: url('Assets/Pictures/formules.jpg'); background-size: cover;     background-position: center center;height: auto;min-height: 20em;">
-    <div class="container text-center py-5">
+<section class="home">
+<div style="background-image: url('Assets/pictures/formules.jpg'); background-size: cover;     background-position: center center;height: auto;min-height: 20em;">
+    <div class="text-center py-5">
         <div class="row">
             <div class="col-md-12">
                 <h1 class="text-center text-shadow text-white  mt-5" style="text-shadow: 0 0 10px #868686, 0 0 10px #b9b9b9, 0 0 8px #000;">NOS FORMULES</h1>
@@ -40,7 +41,7 @@ require 'header.php';
     </div>
 </div>
 
-
+</section>
 <?php
 require 'footer.php';
 ?>
