@@ -14,14 +14,16 @@ $idCheck = $_SESSION["checkout_session"];
 
 $line_items = $stripe->checkout->sessions->allLineItems($idCheck, ['limit' => 5]);
 $amount = $line_items['data'][0]['amount_total'];
+$amountP=floor($amount/100);
+$amountD=$amount/100-$amountP;
 $amount=number_format(($amount / 100), 2, ',', ' ');
 $description= $line_items['data'][0]['description'];
 $date= date('Y-m-d H:i:s');
 $email= $_SESSION["info"]["email"];
 $name = $_SESSION["info"]["name"];
-
+$idUser = $_SESSION["info"]["idUser"];
 if (isset($_SESSION["isPackage"])){
-    echo $idUser = $_SESSION["info"]["idUser"];
+
      $idPackage = $_SESSION["idPackage"];
      $duration = $_SESSION["duration"];
      $datestart = date('Y-m-d');
@@ -39,7 +41,7 @@ if (isset($_SESSION["isPackage"])){
     }
     }
 
-addFidelPoint($amount);
+addFidelPoint($amountP,$amountD);
 
 unset($_SESSION['checkout_session']);
 unset($_SESSION['isPackage']);
@@ -67,5 +69,8 @@ CreateHtmlInvoice($name,$date,$amount,$description,$email,$idCheck);
 </section>
 </body>
 
-<?php include 'footer.php'; ?>
+<?php
+//header( "refresh:5;url=index.php" );
+
+include 'footer.php'; ?>
 

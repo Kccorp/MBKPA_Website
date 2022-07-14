@@ -4,6 +4,10 @@ if (!isset($_SESSION["info"])){
     header("Location: login.php");
 die();
 }
+if (!isset($_SESSION["info"]["idStripe"])){
+    header("Location: newUser.php");
+    die();
+}
 $idStripe= $_SESSION["info"]["idStripe"];
 $object=$_POST["id"];
 $_SESSION["isPackage"]=$_POST["isPackage"];

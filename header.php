@@ -1,31 +1,7 @@
 <?php
-session_start();
+
 require 'fonctions.php';
-
-if (!$_SESSION["checkTracker"]) {
-
-    $ip= $_SERVER['REMOTE_ADDR'];
-    $device = $_SERVER['HTTP_USER_AGENT'];
-    $_SESSION["checkTracker"] = true;
-
-    //Vérifie si l'ip existe dans la db
-    $connection = connectDB();
-    $trackingQueryPrepared = $connection->prepare("SELECT * FROM ".PRE."tracking WHERE ipAddress=:ip");
-    $trackingQueryPrepared->execute(["ip"=>$ip]);
-    $tracking = $trackingQueryPrepared->fetch();
-
-    if (empty($tracking)) {
-        $trackingQueryPrepared = $connection->prepare("INSERT INTO ".PRE."Tracking (ipAddress, device) VALUES (:ip, :device) ;");
-        $trackingQueryPrepared->execute(["ip"=>$ip, "device"=>$device]);
-    }
-}
-
-$time = date("Y-m-d H:i:s");
-$ip= $_SERVER['REMOTE_ADDR'];
-$connection = connectDB();
-$dateQueryPrepared = $connection->prepare("UPDATE ".PRE."tracking SET `lastConnect`=:time WHERE ipAddress=:ip;");
-$dateQueryPrepared->execute(["time"=>$time, "ip"=>$ip]);
-
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="fr">

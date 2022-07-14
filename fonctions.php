@@ -1,6 +1,7 @@
 <?php
 require "conf.inc.php";
 
+
 use ConvertApi\ConvertApi;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -64,7 +65,7 @@ function sendRegisterMail($email){
 			    <br>
                 Mot de passe : xxxxxx
                 <br>
-                <a src="i/ndex.php">
+                <a src="/index.php">
                     <button class="btn btn-primary">Se connecter</button>
                 </a>
             </p>
@@ -117,17 +118,28 @@ function sendMail($email, $content, $subject){
 
 }
 
-function addFidelPoint ($amount){
+function addFidelPoint ($amount,$cents){
 
     $fidelPoint = 0;
-
+    echo $amount;
+    echo "<br>";
+    echo $cents;
     $fidelPoint = $amount*0.3;
+    $fidelPoint += $cents*0.3;
 
-    $fidelPoint+=floor($amount/100);
+    echo "Votre point fidel est de : ".$fidelPoint;
+
+    if ($amount>100) {
+        $fidelPoint += floor($amount / 100);
+        echo "++bonus+++ : ".$fidelPoint;
+    }
 
 
     $fidelPoint=floatval($fidelPoint);
     $dec=$fidelPoint-floor($fidelPoint);
+    echo "decimal : ".$dec;
+    echo "<br>";
+    echo "fidelPoint : ".$fidelPoint;
     if($dec<0.5)
         $fidelPoint = floor($fidelPoint);
     else
@@ -138,6 +150,10 @@ function addFidelPoint ($amount){
     $queryPrepared =  $connection->prepare("UPDATE ".PRE."user SET fidelityPoints = fidelityPoints+ :amount where idUser=:id_user");
     $queryPrepared->execute(["id_user"=>$id, "amount"=>$fidelPoint]);
     $_SESSION["info"]["fidelityPoints"]+=$fidelPoint;
+    echo "<br>";
+    echo $fidelPoint;
+    echo "<br>";
+    echo $_SESSION["info"]["fidelityPoints"];
 }
 
 
@@ -217,7 +233,7 @@ function createConvertPromoCode($idStripe,$couponId,$email){
     $queryPrepared = $connection->prepare("UPDATE " . PRE . "user SET fidelityPoints = :points  WHERE idStripe = :idStripe");
     $queryPrepared->execute(["idStripe" =>$idStripe, "points" => 0]);
 
-   /* $content='<!DOCTYPE html>
+    $content='<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -230,12 +246,10 @@ function createConvertPromoCode($idStripe,$couponId,$email){
 
 </body>
 </html>';
-    sendMail($email,$content,'Votre Code Promo !');*/
+    sendMail($email,$content,'Votre Code Promo !');
     header("Location: profil.php");
     die();
 }
-
-
 function createAdminPromoCode($amount,$isPercent,$name){
     $stripe = new \Stripe\StripeClient(
         'sk_test_51KwpzKJW6etdvbpFazWo3CLbeSnn5VKOjpVFMTAeSHxfYlshGFvli0dFvdbdD5L1H0n6y8uzmlOXBlkvdfeUxRZW00z8fWVUDk'
