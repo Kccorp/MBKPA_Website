@@ -121,25 +121,21 @@ function sendMail($email, $content, $subject){
 function addFidelPoint ($amount,$cents){
 
     $fidelPoint = 0;
-    echo $amount;
-    echo "<br>";
-    echo $cents;
+
     $fidelPoint = $amount*0.3;
     $fidelPoint += $cents*0.3;
 
-    echo "Votre point fidel est de : ".$fidelPoint;
+
 
     if ($amount>100) {
         $fidelPoint += floor($amount / 100);
-        echo "++bonus+++ : ".$fidelPoint;
+
     }
 
 
     $fidelPoint=floatval($fidelPoint);
     $dec=$fidelPoint-floor($fidelPoint);
-    echo "decimal : ".$dec;
-    echo "<br>";
-    echo "fidelPoint : ".$fidelPoint;
+
     if($dec<0.5)
         $fidelPoint = floor($fidelPoint);
     else
@@ -151,9 +147,10 @@ function addFidelPoint ($amount,$cents){
     $queryPrepared->execute(["id_user"=>$id, "amount"=>$fidelPoint]);
     $_SESSION["info"]["fidelityPoints"]+=$fidelPoint;
     echo "<br>";
-    echo $fidelPoint;
+    echo "You receive ".$fidelPoint." fidelity points for this purchase!";
     echo "<br>";
-    echo $_SESSION["info"]["fidelityPoints"];
+    echo "your current balance of fidelity points is :".$_SESSION["info"]["fidelityPoints"];
+    echo "<br>";
 }
 
 
