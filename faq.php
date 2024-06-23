@@ -1,5 +1,6 @@
 <?php
-include 'header.php';
+require __DIR__ . "/header.php";
+require __DIR__ . "/banner.php";
 
 
 if (!empty($_SESSION["listOfErrors"])) {
@@ -13,8 +14,11 @@ if (!empty($_SESSION["listOfErrors"])) {
     unset($_SESSION["listOfErrors"]);
 
 }
+
 ?>
 
+
+
 <?php
-include 'footer.php';
+require __DIR__ . "/footer.php";
 ?>

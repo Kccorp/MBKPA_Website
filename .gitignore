@@ -1,0 +1,13 @@
+
+*.phar
+
+vendor/
+
+*.json
+
+*.lock
+
+.idea/
+
+
+

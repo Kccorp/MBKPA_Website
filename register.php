@@ -1,6 +1,9 @@
 <?php
 session_start();
-
+require "vendor/autoload.php";
+$stripe = new \Stripe\StripeClient(
+    'sk_test_51KwpzKJW6etdvbpFazWo3CLbeSnn5VKOjpVFMTAeSHxfYlshGFvli0dFvdbdD5L1H0n6y8uzmlOXBlkvdfeUxRZW00z8fWVUDk'
+);
 require "fonctions.php";
 
 
@@ -66,12 +69,21 @@ if ( count($_POST) == 6
         //insertion en BDD
         if( empty($listOfErrors) ){
 
-            $queryPrepared =  $connection->prepare("INSERT INTO ".PRE."user (name, lastName, password, email) VALUES ( :name, :lastName , :pwd, :email);");
+            //creation client stripe
+            $customer= $stripe->customers->create([
+                'email' => $_POST['email'],
+                'name'  => $_POST['nom'] . " " . $_POST['prenom']
+            ]);
+
+            $idStripe = $customer->id;
+
+
+            $queryPrepared =  $connection->prepare("INSERT INTO ".PRE."user (name, lastName, password, email, idStripe) VALUES ( :name, :lastName , :pwd, :email, :idStripe);");
             $pwd = password_hash($pwd, PASSWORD_DEFAULT);
 
-            $queryPrepared->execute(["name"=>$nom, "lastName"=>$prenom, "pwd"=>$pwd, "email"=>$email]);
+            $queryPrepared->execute(["name"=>$nom, "lastName"=>$prenom, "pwd"=>$pwd, "email"=>$email, "idStripe"=>$idStripe]);
 
-            $queryPrepared = $connection->prepare("SELECT * FROM ".PRE."User WHERE email=:email");
+            $queryPrepared = $connection->prepare("SELECT * FROM ".PRE."user WHERE email=:email");
             $queryPrepared->execute(["email"=>$email]);
             $results = $queryPrepared->fetch();
 
@@ -100,7 +112,7 @@ if ( count($_POST) == 6
                     <br>
                     Mot de passe : xxxxxx
                     <br>
-                    <a href="http://localhost:63342/Lotte_PA/index.php">
+                    <a href="/index.php">
                         Se connecter
                     </a>
                 </p>
@@ -111,9 +123,8 @@ if ( count($_POST) == 6
             if ( sendMail($email, $content, $subject) == true ){
                 header("Location: index.php");
             }else{
-                $listOfErrors[] =  "Erreur lors de l'envoi du mail. Veuillez réessayer plus tard";
+                echo "<script>alert('Erreur lors de l envoi du mail')</script>";
                 $_SESSION["listOfErrors"] = $listOfErrors;
-                header("Location: newUser.php");
             }
 
 

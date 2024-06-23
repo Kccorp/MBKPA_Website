@@ -1,5 +1,7 @@
 <?php
-include "header.php";
+require __DIR__ . "/header.php";
+require __DIR__ . "/banner.php";
+
 
 if (count($_POST)==3
     && !empty($_POST["email"])
@@ -11,58 +13,73 @@ if (count($_POST)==3
         $pwd = $_POST["password"];
 
         $connection = connectDB();
-        $queryPrepared = $connection->prepare("SELECT * FROM ".PRE."User WHERE email=:login");
+        $queryPrepared = $connection->prepare("SELECT * FROM ".PRE."user WHERE email=:login");
         $queryPrepared->execute(["login"=>$login]);
         $results = $queryPrepared->fetch(PDO::FETCH_ASSOC);
 
 
         if(empty($results)){
-            echo '<div class="alert alert-danger">Identifiants incorrects</div>';
+            echo "<script type='text/javascript'>alert('Identifiants incorrects');</script>";
         }elseif ($results["isBanned"] == 1) {
-            echo '<div class="alert alert-danger">Vous êtes BAN (sorry or not sorry)</div>';
+            echo "<script type='text/javascript'>alert('Tu es ban');</script>";
         }else if( password_verify($pwd, $results["password"])){
 
             $_SESSION["auth"]=true;
             $_SESSION["info"]=$results;
             echo '<div class="alert alert-success">Connexion réussie</div>';
-            header("Location: index.php");
+
+            header("Location:index.php");
+
         }else{
-            echo '<div class="alert alert-danger">Identifiants incorrects</div>';
+            echo "<script type='text/javascript'>alert('Identifiants incorrects');</script>";
         }
     }
 }
+
+
 ?>
 
+    <head>
+        <link rel="stylesheet" href="css/login.css">
+    </head>
+
+
+<section class="home">
 
 
     <div class="wrapper">
         <div class="headline">
-            <h1>Bienvenue. <br>Montez dans le vaisseau direction le futur </h1>
+            <h1>Bienvenue. <br>Montes dans le vaisseau direction le futur </h1>
         </div>
 
         <form  action="login.php" class="form" method="post" id="register-form">
 
             <div class="signin">
                 <div class="form-group">
-                    <input type="text" name="email" placeholder="Email"/></p>
+                    <input type="text" name="email" placeholder="Email"/>
                 </div>
                 <div class="form-group">
-                    <input type="password" name="password" placeholder="Mot de passe"/></p>
+                    <input type="password" name="password" placeholder="Mot de passe"/>
                 </div>
-                <div class="forget-password">
-                    <a href="#">Un trou de mémoire ? </a>
-                </div>
+
                 <button type="submit"
                         class="g-recaptcha btn btn-primary"
                         data-sitekey=<?php echo SITE_API_CAPTCHA; ?>
                         data-callback='onSubmit'
                         data-action='submit'>Valider</button>
+                <div class="forget-password">
+                    <a href="#">Un trou de mémoire ? </a>
+                </div>
                 <div class="account-exist">
+
                     Vous n'avez pas encore rejoint la team ? <a href="newUser.php" id="signup">Bah rejoins là</a>
                 </div>
             </div>
         </form>
     </div>
+
+
+</section>
 
 <script src='https://www.google.com/recaptcha/api.js'></script>
 <script>

@@ -299,6 +299,8 @@ body.dark .switch::before{
     width: calc(100% - 250px);
     background-color: var(--body-color);
     transition: var(--tran-05);
+    margin-left: 2%;
+    margin-top: 3%;
 }
 .home .text{
     font-size: 30px;
@@ -308,9 +310,9 @@ body.dark .switch::before{
 }
 
 .sidebar.close ~ .home{
-    left: 78px;
-    height: 100vh;
-    width: calc(100% - 78px);
+    left: 100px;
+    height: 100%;
+    width: calc(100% - 180px);
 }
 body.dark .home .text{
     color: var(--text-color);

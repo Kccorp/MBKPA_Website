@@ -1,5 +1,11 @@
 <?php
-require 'header.php';
+require __DIR__ . "/header.php";
+require __DIR__ . "/banner.php";
+?>
+<body>
+
+<section class="home">
+<?php
 if (isset($_SESSION["auth"]) && $_SESSION["auth"] == "true") {
 
     echo "<div class='alert alert-success'>";
@@ -8,16 +14,13 @@ if (isset($_SESSION["auth"]) && $_SESSION["auth"] == "true") {
 
 }
 ?>
-
-                    <h1>Welcome to the home page</h1>
-                    <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-                    <a class="btn btn-primary btn-lg" href="newUser.php" role="button">S'inscrire &raquo;</a>
-                    <a class="btn btn-primary btn-lg" href="login.php" role="button">Se connecter &raquo;</a>
-
-
-
+    <h2>Testez notre simulation de location de trotinette</h2>
+    <a href="webGl.html">
+        <button type="submit" class="btn btn-primary">Ajouter</button>
+    </a>
+</section>
 
 <?php
-include 'footer.php';
+require 'footer.php';
 ?>
 
